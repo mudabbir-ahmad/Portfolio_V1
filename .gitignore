@@ -1,0 +1,16 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+
+# Personal data — never uploaded, at all costs
+secrets/
+
+# The CV contains personal details; only the README placeholder ships
+public/CV/*
+!public/CV/README.txt
+
+# Local env / editor cruft
+*.local
+.DS_Store
