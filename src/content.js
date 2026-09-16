@@ -10,7 +10,7 @@ const LOCATION = import.meta.env.VITE_LOCATION || "London, UK";
 const EMAIL = import.meta.env.VITE_EMAIL || "";
 const GITHUB_USER = import.meta.env.VITE_GITHUB_USER || "your-github-username";
 const LINKEDIN = import.meta.env.VITE_LINKEDIN || "";
-const CV_URL = import.meta.env.VITE_CV_URL || "/CV/Bob-CV.pdf";
+const CV_URL = import.meta.env.VITE_CV_URL || "/CV/my_cv.pdf";
 
 export const profile = {
   name: NAME,
@@ -28,13 +28,13 @@ export const profile = {
   availability: "Open to graduate software engineering roles",
 
   education: {
-    degree: "BSc Computer Science (Hons)",
+    degree: "BSc Computer Science & Distributed Systems (Hons)",
     classification: "First Class (1:1)",
-    institution: "A London University",
+    institution: "Kingston University",
   },
 
   about: [
-    "I'm a recent graduate software engineer based in London. I studied Computer Science at first-class level, and spent my degree building real systems — a network-attached storage product for my final-year project, mobile apps with React Native, and coursework that pushed me to think like an engineer, not just a coder.",
+    "I'm a recent graduate software engineer based in London. I studied Computer Science at first-class level, and spent my degree building real systems — a media aggregation & sorting system for my final-year project, mobile apps with React Native, and coursework that pushed me to think like an engineer, not just a coder.",
     "Outside of work I run a home lab: a Proxmox host carrying a stack of self-hosted services, three cloud VPS instances, and a growing interest in running local AI models on my own hardware. If it can be self-hosted, I've probably tried to.",
   ],
 };
@@ -57,18 +57,32 @@ export const experience = [
       "Seeking graduate and early-career software engineering roles. Open to placements, contracts, and full-time starts.",
   },
   {
-    period: "2024 — 2025",
-    title: "Final-Year Project — MASS NAS",
-    org: "A London University",
+    period: "Summers 2020 — 2026",
+    title: "Network Infrastructure Engineer (Volunteer)",
+    org: "Jalsa Salana UK · Ahmadiyya Muslim Association",
     detail:
-      "Designed and built a network-attached storage client end to end: REST API integration, Base64-encoded file payloads in the database, and full project documentation.",
+      "Engineered a high-availability network for 20,000+ concurrent users with 99.9% uptime, automating hardware monitoring via custom Linux scripts; configured hardware and structured cabling across multi-site event environments, troubleshooting in real time under time-critical conditions.",
   },
   {
-    period: "2021 — 2025",
-    title: "BSc Computer Science (Hons)",
-    org: "A London University · First Class (1:1)",
+    period: "Nov 2025 — Feb 2026",
+    title: "Optical Assistant",
+    org: "Specsavers · London",
     detail:
-      "Coursework spanning web and mobile development, databases, networking, and systems programming, capped by the final-year NAS project.",
+      "Managed sensitive patient data systems with 100% accuracy in a high-volume clinical environment; advised customers on eyewear options and completed sales; fitted and adjusted spectacle frames with precision.",
+  },
+  {
+    period: "2025 — 2026",
+    title: "Final-Year Project — MASS",
+    org: "Kingston University",
+    detail:
+      "Built MASS (Media Aggregation & Sorting System), a cross-platform React Native app that aggregates media from device storage, Google Photos, and a home NAS into one timeline view, backed by a RESTful Express.js backend; cut data retrieval latency 30% via API caching.",
+  },
+  {
+    period: "2023 — 2026",
+    title: "BSc Computer Science (Hons) & Distributed Systems",
+    org: "Kingston University · First Class (1:1)",
+    detail:
+      "Coursework spanning web and mobile development, databases, networking, and systems programming, capped by the MASS final-year project.",
   },
 ];
 
@@ -100,29 +114,30 @@ export const interests = [
 // the highlight bullets; `stack` replaces the old tag list.
 export const projects = [
   {
-    title: "MASS — Network Attached Storage",
-    year: "2025",
+    title: "MASS — Media Aggregation & Sorting System",
+    year: "2026",
     role: "Final-year project · Solo",
     description:
-      "A NAS client that talks to a home server over a REST API, with file payloads stored Base64-encoded in the database. Designed, built, and documented end to end.",
+      "A cross-platform React Native app that aggregates media from multiple services — device storage, Google Photos, and a home NAS — into one timeline view, backed by a RESTful Express.js backend.",
     features: [
-      "REST API client for a home storage server",
-      "Base64-encoded file payloads persisted in the database",
-      "Full project write-up — design decisions, trade-offs, testing",
+      "Reduced data retrieval latency 30% through optimized API caching",
+      "Metadata-driven sorting across diverse media types",
+      "RESTful Express.js backend cutting server response time 15% via middleware design",
+      "CI/CD pipelines reducing manual testing and integration time 20%",
     ],
-    stack: ["JavaScript", "REST APIs", "Databases"],
+    stack: ["React Native", "Expo", "Node.js", "Express.js"],
     repo: `https://github.com/${GITHUB_USER}/Abstracted-MASS-PublicVer`,
     highlight: true,
   },
   {
-    title: "QR Treasure Hunt",
-    year: "2023",
+    title: "QR Code Treasure Hunt",
+    year: "2024",
     role: "Group project · Year 2 final coursework",
     description:
-      "A React.js treasure hunt where players scan QR codes to progress through the game. Built as a group under deadline for my Professional Environments final.",
+      "A web-based scavenger hunt where participants scan physical QR codes to claim items and accumulate points, with a real-time leaderboard for competitive gameplay.",
     features: [
-      "QR-code scanning drives game progression",
-      "React.js front end with stateful game flow",
+      "QR generation with server-side validation logic",
+      "Real-time leaderboard driving competitive play",
       "Shipped as a team within a fixed coursework window",
     ],
     stack: ["React.js", "JavaScript"],
@@ -143,28 +158,28 @@ export const projects = [
     repo: `https://github.com/${GITHUB_USER}/Project-MAD-crudler`,
   },
   {
-    title: "Habit Tracker",
+    title: "Routines App",
     year: "2024",
     role: "Personal project · Android",
     description:
-      "An Android habit-tracking app built with Kotlin using the MVVM architecture and Room for local persistence.",
+      "A native Android habit tracker built in Kotlin with MVVM architecture and Room Database for offline-first persistence, plus notification-driven reminders and progress visualization.",
     features: [
       "MVVM architecture with a dedicated ViewModel layer",
       "Room database for offline-first local persistence",
-      "Create, track, and review daily habits",
+      "Notification-driven reminders and habit completion trends",
     ],
-    stack: ["Kotlin", "Android", "MVVM", "Room"],
+    stack: ["Kotlin", "Android Studio", "MVVM", "Room"],
   },
   {
-    title: "Gyro & GPS Treasure Hunt",
-    year: "2023",
+    title: "Location-Based Treasure Hunt App",
+    year: "2024",
     role: "Personal project · Cross-platform",
     description:
-      "A cross-platform React Native game (iOS and Android) that combines device gyroscope input with GPS for map-based treasure hunting.",
+      "A GPS and proximity-driven React Native game where players claim hidden caches based on physical location and device orientation, backed by a RESTful API.",
     features: [
-      "Gyroscope input for physical, device-driven gameplay",
-      "GPS positioning on a live map",
-      "One codebase shipping to both iOS and Android",
+      "Geolocation and compass APIs for real-time bearing and distance",
+      "Responsive UI that updates dynamically as the player moves",
+      "RESTful API backend at 90% code coverage via automated unit testing",
     ],
     stack: ["React Native", "GPS", "Sensor APIs"],
   },
@@ -200,7 +215,7 @@ export const githubRepos = [
   {
     name: "Abstracted-MASS-PublicVer",
     description:
-      "Public version of my final-year project — a NAS client over REST with Base64 file storage.",
+      "Public version of my final-year project — a media aggregation & sorting app across device storage, Google Photos, and a home NAS.",
     language: "JavaScript",
     stars: 1,
     url: `https://github.com/${GITHUB_USER}/Abstracted-MASS-PublicVer`,
