@@ -42,7 +42,7 @@ export const profile = {
 // Numbers shown in the stats strip under the hero.
 export const stats = [
   { value: "7+", label: "Projects built end to end" },
-  { value: "10", label: "Languages & frameworks" },
+  { value: "17", label: "Languages & frameworks" },
   { value: "11", label: "Self-hosted services running" },
   { value: "1:1", label: "First-class BSc Computer Science" },
 ];
@@ -256,6 +256,13 @@ export const skills = {
     "JavaScript",
     "Python",
     "Bash",
+    "PHP",
+    "SQL",
+    "JSON",
+    "React.js",
+    "Node.js",
+    "Express.js",
+    "Oracle Apex",
   ],
   tools: [
     "IntelliJ IDEA",
@@ -265,6 +272,14 @@ export const skills = {
     "Docker",
     "Git",
     "RESTful APIs",
+    "VS Code",
+    "Android Studio",
+    "Expo",
+    "Linux",
+    "Agile/Scrum",
+    "CI/CD",
+    "NetBeans",
+    "Debian",
   ],
 };
 
