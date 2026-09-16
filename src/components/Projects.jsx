@@ -1,7 +1,7 @@
 import { projects } from "../content.js";
 
-function Tag({ children }) {
-  return <span className="tag">{children}</span>;
+function Tag({ children, variant }) {
+  return <span className={`tag${variant ? ` tag--${variant}` : ""}`}>{children}</span>;
 }
 
 export default function Projects() {
@@ -33,6 +33,11 @@ export default function Projects() {
               </ul>
               <div className="project-foot">
                 <div className="project-tags">
+                  {(p.tags || []).map((t) => (
+                    <Tag key={t} variant="private">
+                      {t}
+                    </Tag>
+                  ))}
                   {p.stack.map((t) => (
                     <Tag key={t}>{t}</Tag>
                   ))}

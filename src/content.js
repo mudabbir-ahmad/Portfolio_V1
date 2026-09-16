@@ -43,7 +43,7 @@ export const profile = {
 export const stats = [
   { value: "7+", label: "Projects built end to end" },
   { value: "17", label: "Languages & frameworks" },
-  { value: "11", label: "Self-hosted services running" },
+  { value: "15", label: "Self-hosted services running" },
   { value: "1:1", label: "First-class BSc Computer Science" },
 ];
 
@@ -96,7 +96,7 @@ export const interests = [
   {
     name: "Local LLMs",
     detail:
-      "Running Gemma 31B at home to learn how inference actually works under the hood.",
+      "Running local LLMs at home to learn how inference actually works under the hood.",
   },
   {
     name: "Hardware tinkering",
@@ -169,6 +169,7 @@ export const projects = [
       "Notification-driven reminders and habit completion trends",
     ],
     stack: ["Kotlin", "Android Studio", "MVVM", "Room"],
+    repo: `https://github.com/${GITHUB_USER}/Kotlin-TB2P1`,
   },
   {
     title: "Location-Based Treasure Hunt App",
@@ -182,19 +183,21 @@ export const projects = [
       "RESTful API backend at 90% code coverage via automated unit testing",
     ],
     stack: ["React Native", "GPS", "Sensor APIs"],
+    repo: `https://github.com/${GITHUB_USER}/MAD-Treasure-Hunt`,
   },
   {
     title: "AI Discord Bot",
     year: "2025",
     role: "Personal project · Self-hosted",
     description:
-      "A Python Discord bot with text chat and voice, powered by a self-hosted Gemma 4 31B-IT model running on my own hardware.",
+      "A Python Discord bot with text chat and voice, powered by a Cloud Gemma 4 31B-IT model with a local fallback to a quantised Gemma 4 E4B.",
     features: [
-      "Text and voice channels backed by a local LLM",
-      "Self-hosted Gemma 4 31B-IT — no cloud round-trips",
+      "Text and voice channels backed by an LLM",
+      "Cloud Gemma 4 31B-IT primary, with a local Gemma 4 E4B QAT fallback",
       "Runs continuously on home hardware via Discord API",
     ],
-    stack: ["Python", "Local LLM", "Voice", "Discord API"],
+    stack: ["Python", "LLM", "Voice", "Discord API"],
+    tags: ["Private-Repo"],
   },
   {
     title: "CV Builder",
@@ -208,6 +211,7 @@ export const projects = [
       "Clean, printable output from the desktop app",
     ],
     stack: ["Java", "Swing"],
+    tags: ["Private-Repo"],
   },
 ];
 
@@ -295,12 +299,16 @@ export const homelab = [
   { name: "OpenVPN + WireGuard", detail: "Self-hosted VPN for devices on the move" },
   { name: "OpenWebUI", detail: "Chat front end for local models" },
   { name: "Gitea", detail: "Self-hosted Git server" },
+  { name: "Vaultwarden", detail: "Self-hosted password manager" },
+  { name: "Immich", detail: "Private photo and video library" },
+  { name: "Home Assistant", detail: "Home automation hub" },
+  { name: "Termux", detail: "Android terminal for on-the-go lab access" },
 ];
 
 export const localAI = {
   heading: "Local AI, on my own hardware",
   body: [
-    "I run self-hosted language models on hardware I own — currently a quantised Qwen 3.8 27B served through LM Studio and OpenWebUI — as a way to learn how LLMs actually work under the hood: inference, context, and serving.",
-    "It's not just theory: a Gemma 4 31B-IT instance powers the text chat and voice in my Discord bot. No cloud round-trips, no data leaving the house.",
+    "I run self-hosted language models on hardware I own — currently a custom flavour of Qwen 3.8 27B served through LM Studio and OpenWebUI — as a way to learn how LLMs actually work under the hood: inference, context, and serving.",
+    "It's not just theory: my Discord bot pairs a Cloud Gemma 4 31B-IT model for text chat and voice with a local Gemma 4 E4B QAT fallback.",
   ],
 };

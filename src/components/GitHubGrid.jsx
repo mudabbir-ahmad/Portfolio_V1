@@ -11,7 +11,10 @@ export default function GitHubGrid() {
       <div className="container">
         <h2 className="section-title">On GitHub</h2>
         <p className="section-lede">
-          A curated selection of public repositories — the full list lives on{" "}
+          A curated selection from my 38 repositories — 30 self-made and 8
+          fully agentic projects built with AI agents, to develop a feel for
+          system design and AI-assisted software development. The full list
+          lives on{" "}
           <a href={profile.github} target="_blank" rel="noreferrer">
             github.com/{profile.githubUser}
           </a>

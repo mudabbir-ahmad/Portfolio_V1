@@ -577,6 +577,12 @@ a {
   padding: 4px 12px;
 }
 
+.tag--private {
+  color: var(--accent);
+  border-color: var(--hairline-strong);
+  background: var(--accent-tint);
+}
+
 /* ---------- github ---------- */
 
 .github {
