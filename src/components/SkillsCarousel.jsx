@@ -1,15 +1,18 @@
 import { skills } from "../content.js";
 
+// Even copy count so the -50% translate lands on a copy boundary
+// (seamless loop); 12 copies keep half the track (~5000px) far wider
+// than any real viewport, so the right edge never gaps.
+const COPIES = 12;
+
 function Marquee({ label, items }) {
-  // Four copies so the track always covers the viewport on wide screens;
-  // the -50% translate lands on a copy boundary, keeping the loop seamless.
-  const row = [...items, ...items, ...items, ...items];
+  const row = Array.from({ length: COPIES }, () => items).flat();
   return (
     <div className="marquee-block">
       <h3 className="marquee-label">{label}</h3>
       <div
         className="marquee"
-        style={{ "--marquee-duration": `${items.length * 3.4}s` }}
+        style={{ "--marquee-duration": `${items.length * 3.4 * (COPIES / 4)}s` }}
         aria-label={`${label}: ${items.join(", ")}`}
       >
         <div className="marquee-track">
@@ -17,7 +20,7 @@ function Marquee({ label, items }) {
             <span
               key={`${item}-${i}`}
               className="marquee-item"
-              aria-hidden={i >= items.length * 2}
+              aria-hidden={i >= items.length * (COPIES / 2)}
             >
               {item}
             </span>
