@@ -111,7 +111,8 @@ export const interests = [
 ];
 
 // Case-study project cards. `role` is a short context line; `features` are
-// the highlight bullets; `stack` replaces the old tag list.
+// the highlight bullets; `stack` replaces the old tag list. `detail` holds
+// the long-form write-up for the expanded view; `image` is its art.
 export const projects = [
   {
     title: "MASS: Media Aggregation & Sorting System",
@@ -119,6 +120,9 @@ export const projects = [
     role: "Final-year project · Solo",
     description:
       "A cross-platform React Native app that aggregates media from device storage, Google Photos, and a home NAS into one timeline view, backed by a RESTful Express.js backend.",
+    image: "/images/projects/mass.svg",
+    detail:
+      "Built as my final-year project, MASS pulls media from three sources — device storage, Google Photos, and a Synology NAS on the home network — and merges them into one chronological timeline. The Express backend sits between the app and each source, normalising metadata so sorting by date, type, or location stays consistent regardless of where the file lives. Most of my engineering time went into the caching layer: repeated timeline fetches hit the cache instead of re-querying all three sources, which is where the 30% latency reduction came from.",
     features: [
       "Reduced data retrieval latency 30% through optimized API caching",
       "Metadata-driven sorting across diverse media types",
@@ -134,6 +138,9 @@ export const projects = [
     role: "Hardware project · ESP32",
     description:
       "A 240 GHz radio-frequency setup that uses the Doppler effect to track three moving targets, with an Arduino ESP32 board processing the sensor data and serving live results as a website.",
+    image: "/images/projects/radar.svg",
+    detail:
+      "A hardware build around a 240 GHz Doppler radar module and an ESP32. The board samples the RF signal, extracts velocity from the Doppler shift, and keeps track of up to three targets at once. Results stream over Wi-Fi to a small web dashboard I wrote so I could watch the tracking live — half project, half excuse to get comfortable with raw sensor data.",
     features: [
       "240 GHz RF sensing exploiting the Doppler shift for motion tracking",
       "Tracks three moving targets simultaneously",
@@ -148,6 +155,9 @@ export const projects = [
     role: "Group project · Year 2 final coursework",
     description:
       "A web-based scavenger hunt where participants scan physical QR codes to claim items and accumulate points, with a real-time leaderboard for competitive gameplay.",
+    image: "/images/projects/qr-hunt.svg",
+    detail:
+      "A scavenger hunt for real spaces: each item is hidden behind a physical QR code that participants scan with their phone to claim points. The server validates every scan so codes can't be replayed from the leaderboard page, and the board updates in real time as teams race around the venue. We shipped it as a group within a fixed coursework window, which mostly taught me how to split work cleanly across people.",
     features: [
       "QR generation with server-side validation logic",
       "Real-time leaderboard driving competitive play",
@@ -162,6 +172,9 @@ export const projects = [
     role: "University project",
     description:
       "A full CRUD(L) application built to learn React Native properly: create, read, update, delete, and list flows across screens.",
+    image: "/images/projects/crudl.svg",
+    detail:
+      "A deliberately small React Native app that exists because I wanted to actually understand the framework before building anything big on it. It walks through the full create-read-update-delete-list cycle with separate screens for list, detail, and edit — and the navigation between them is where most of my learning happened.",
     features: [
       "Complete CRUD(L) flows across multiple screens",
       "Navigation between list, detail, and edit views",
@@ -176,6 +189,9 @@ export const projects = [
     role: "Personal project · Android",
     description:
       "A native Android habit tracker built in Kotlin with MVVM architecture and Room Database for offline-first persistence, plus notification-driven reminders and progress visualization.",
+    image: "/images/projects/routines.svg",
+    detail:
+      "A habit tracker I built for myself in native Android. Kotlin with MVVM, Room for offline-first persistence, and system notifications that nudge at set times. The progress view plots completion trends so a broken streak is obvious at a glance — it's the project where I got serious about architecture rather than just making screens work.",
     features: [
       "MVVM architecture with a dedicated ViewModel layer",
       "Room database for offline-first local persistence",
@@ -190,6 +206,9 @@ export const projects = [
     role: "University project · Mobile Development",
     description:
       "A GPS and proximity-driven React Native game where players claim hidden caches based on physical location and device orientation, backed by a RESTful API.",
+    image: "/images/projects/geo-hunt.svg",
+    detail:
+      "The mobile-development coursework project: a game where hidden caches are claimed by being physically near them, with the device's compass giving bearing and distance to guide you in. The UI re-renders as you move so the map feels live rather than polled. The backend was the graded piece — I pushed it to 90% unit-test coverage before submission.",
     features: [
       "Geolocation and compass APIs for real-time bearing and distance",
       "Responsive UI that updates dynamically as the player moves",
@@ -204,6 +223,9 @@ export const projects = [
     role: "Personal project · Self-hosted",
     description:
       "A Python Discord bot with text chat and voice, powered by a Cloud Gemma 4 31B-IT model with a local fallback to a quantised Gemma 4 E4B.",
+    image: "/images/projects/ai-bot.svg",
+    detail:
+      "A self-hosted Discord bot that answers in text channels and joins voice channels, powered by a Cloud Gemma 4 31B-IT model with a local quantised Gemma 4 E4B as fallback when the cloud is down or slow. It runs on my home hardware around the clock, which doubles as a testbed for prompting behaviour before I wire anything similar into other projects.",
     features: [
       "Text and voice channels backed by an LLM",
       "Cloud Gemma 4 31B-IT primary, with a local Gemma 4 E4B QAT fallback",
@@ -214,17 +236,20 @@ export const projects = [
   },
   {
     title: "CV Builder",
-    year: "2022",
+    year: "2024/2025",
     role: "Personal project · Desktop",
     description:
       "A desktop CV builder written in Java with a Swing interface: form-driven editing that generates a clean, printable CV.",
+    image: "/images/projects/cv-builder.svg",
+    detail:
+      "An early desktop project in Java and Swing — form-driven editing of CV sections with a live preview and printable output. Built long before I had any web experience, and still the reason I understand why most people prefer not building UIs in Swing.",
     features: [
       "Form-driven editing of CV sections",
       "Live preview before export",
       "Clean, printable output from the desktop app",
     ],
     stack: ["Java", "Swing"],
-    tags: ["Private-Repo"],
+    tags: ["GitLab"],
   },
 ];
 

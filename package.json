@@ -9,8 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "motion": "^13.4.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.0",

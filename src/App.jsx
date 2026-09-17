@@ -10,24 +10,47 @@ import SkillsCarousel from "./components/SkillsCarousel.jsx";
 import Interests from "./components/Interests.jsx";
 import Homelab from "./components/Homelab.jsx";
 import Contact from "./components/Contact.jsx";
+import Cursor from "./components/Cursor.jsx";
+import Reveal from "./components/Reveal.jsx";
 
 export default function App() {
   return (
     <>
+      <Cursor />
       <Nav />
       <main>
-        <Hero />
-        <Stats />
-        <About />
-        <Experience />
+        <Reveal>
+          <Hero />
+        </Reveal>
+        <Reveal delay={0.05}>
+          <Stats />
+        </Reveal>
+        <Reveal>
+          <About />
+        </Reveal>
+        <Reveal>
+          <Experience />
+        </Reveal>
         <Projects />
-        <PushTracker />
-        <GitHubGrid />
-        <SkillsCarousel />
-        <Interests />
-        <Homelab />
+        <Reveal>
+          <PushTracker />
+        </Reveal>
+        <Reveal>
+          <GitHubGrid />
+        </Reveal>
+        <Reveal>
+          <SkillsCarousel />
+        </Reveal>
+        <Reveal>
+          <Interests />
+        </Reveal>
+        <Reveal>
+          <Homelab />
+        </Reveal>
       </main>
-      <Contact />
+      <Reveal>
+        <Contact />
+      </Reveal>
     </>
   );
 }

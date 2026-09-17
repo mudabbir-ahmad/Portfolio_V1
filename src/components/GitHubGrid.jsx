@@ -1,9 +1,40 @@
 import { profile, githubRepos } from "../content.js";
+import { skillIcons } from "./skill-icons.js";
 
 const langColors = {
   JavaScript: "#f1e05a",
   CSS: "#86e1fc",
 };
+
+// GitHub /languages names → glyph keys in skill-icons.js
+const ICONS = {
+  JavaScript: "JavaScript",
+  TypeScript: "TypeScript",
+  Python: "Python",
+  Java: "Java",
+  Kotlin: "Kotlin",
+  Go: "Go",
+  CSS: "CSS",
+  HTML: "HTML",
+};
+
+function LangMark({ language }) {
+  const icon = ICONS[language] && skillIcons[ICONS[language]];
+  if (icon) {
+    return (
+      <svg
+        viewBox={icon.vb}
+        fill="currentColor"
+        className="repo-lang-icon"
+        aria-hidden="true"
+        dangerouslySetInnerHTML={{ __html: icon.inner }}
+      />
+    );
+  }
+  return (
+    <i className="dot" style={{ background: langColors[language] || "#999" }} />
+  );
+}
 
 export default function GitHubGrid() {
   return (
@@ -33,10 +64,7 @@ export default function GitHubGrid() {
               <p>{r.description}</p>
               <div className="repo-meta">
                 <span className="repo-lang">
-                  <i
-                    className="dot"
-                    style={{ background: langColors[r.language] || "#999" }}
-                  />
+                  <LangMark language={r.language} />
                   {r.language}
                 </span>
                 <span className="repo-stars">

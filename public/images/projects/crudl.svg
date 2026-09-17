@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="CRUDL · React Native Demo">
+  <rect width="800" height="500" fill="#14112a"/>
+  <defs>
+    <radialGradient id="glow" cx="25%" cy="65%" r="85%">
+      <stop offset="0%" stop-color="#6c4fd8" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#6c4fd8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#glow)"/>
+  <circle cx="764" cy="2" r="62" fill="none" stroke="#8b72e8" stroke-opacity="0.20" stroke-width="1.5"/>
+  <circle cx="746" cy="336" r="64" fill="none" stroke="#8b72e8" stroke-opacity="0.10" stroke-width="1.5"/>
+  <circle cx="728" cy="170" r="66" fill="none" stroke="#8b72e8" stroke-opacity="0.15" stroke-width="1.5"/>
+  <circle cx="710" cy="4" r="68" fill="none" stroke="#8b72e8" stroke-opacity="0.20" stroke-width="1.5"/>
+  <circle cx="410" cy="222" r="4" fill="#a795f0" fill-opacity="0.5"/>
+  <circle cx="652" cy="468" r="4" fill="#a795f0" fill-opacity="0.5"/>
+  <circle cx="94" cy="214" r="4" fill="#a795f0" fill-opacity="0.5"/>
+  <text x="40" y="452" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" fill="#8f86c9">CRUDL · React Native Demo</text>
+</svg>

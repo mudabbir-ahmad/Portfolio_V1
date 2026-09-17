@@ -21,20 +21,21 @@ function fmtDay(iso) {
   return new Date(y, m - 1, d).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 }
 
-// GitHub-style levels: quartiles over the non-zero days.
+// GitHub-style levels: quartile buckets over [0, cap], where cap is the
+// 95th percentile of non-zero daily counts (outlier removal). This matches
+// GitHub's rendered shades on the current window (359/359 API-present days).
 function levelMap(counts) {
   const active = [...counts.values()].filter((n) => n > 0).sort((a, b) => a - b);
+  if (active.length === 0) return new Map();
+  const i = (active.length - 1) * 0.95;
+  const lo = Math.floor(i);
+  const hi = Math.ceil(i);
+  const cap = active[lo] + (active[hi] - active[lo]) * (i - lo);
+  const q = cap / 4;
   const levels = new Map();
   for (const [day, n] of counts) {
     if (n === 0) continue;
-    let lo = 0;
-    let hi = active.length;
-    while (lo < hi) {
-      const mid = (lo + hi) >> 1;
-      if (active[mid] < n) lo = mid + 1;
-      else hi = mid;
-    }
-    levels.set(day, Math.min(MAX_LEVEL, Math.floor((lo / active.length) * MAX_LEVEL) + 1));
+    levels.set(day, n < q ? 1 : n < 2 * q ? 2 : n < 3 * q ? 3 : MAX_LEVEL);
   }
   return levels;
 }

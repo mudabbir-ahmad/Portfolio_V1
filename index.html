@@ -1,17 +1,28 @@
 <!doctype html>
 <html lang="en-GB">
   <head>
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var dark = saved
+            ? saved === "dark"
+            : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (dark) document.documentElement.dataset.theme = "dark";
+        } catch (e) {}
+      })();
+    </script>
     <meta charset="UTF-8" />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23D97757'/%3E%3Ctext x='32' y='45' font-family='Arial, sans-serif' font-size='38' font-weight='bold' text-anchor='middle' fill='%23FAF9F5'%3EB%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236c4fd8'/%3E%3Ctext x='32' y='45' font-family='Arial, sans-serif' font-size='38' font-weight='bold' text-anchor='middle' fill='%23ffffff'%3EM%3C/text%3E%3C/svg%3E"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Bob, graduate software engineer in London. BSc Computer Science with Honours, First Class. Projects, skills, and a homelab."
+      content="Mudabbir Ahmad, graduate software engineer in London. BSc Computer Science with Honours, First Class. Projects, skills, and a homelab."
     />
-    <title>Bob, Graduate Software Engineer</title>
+    <title>Mudabbir Ahmad, Graduate Software Engineer</title>
   </head>
   <body>
     <div id="root"></div>

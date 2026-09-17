@@ -1,27 +1,69 @@
-/* ==========================================================================
-   Design tokens — Frankenstein blend:
-   palette from anthropic.com (cream / ink / terracotta),
-   typography from cappfinity.com (Helvetica Now Display + Text).
-   ========================================================================== */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities" layer(utilities);
+
+@theme inline {
+  --color-paper: var(--bg);
+  --color-paper-alt: var(--bg-alt);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-tint: var(--accent-tint);
+  --color-panel: var(--panel);
+  --font-display: var(--font-display);
+  --font-text: var(--font-text);
+}
 
 :root {
-  --bg: #faf9f5;
-  --bg-alt: #f0eee6;
+  /* light theme (default) */
+  --bg: #f7f6f9;
+  --bg-alt: #efedf4;
   --surface: #ffffff;
-  --ink: #141413;
-  --ink-soft: #57544b;
-  --muted: #8a887c;
-  --hairline: #e5e2d8;
-  --hairline-strong: #cfcab9;
-  --accent: #d97757;
-  --accent-dark: #c05f3e;
-  --accent-tint: #f6e4da;
+  --ink: #17151f;
+  --ink-soft: #54505e;
+  --muted: #8b8798;
+  --hairline: #e4e2ec;
+  --hairline-strong: #cfcbe0;
+  --accent: #6c4fd8;
+  --accent-dark: #5a3fb8;
+  --accent-tint: #ece7fa;
+  --accent-contrast: #ffffff;
+  /* always-dark panel (contact section) */
+  --panel: #17151f;
+  --panel-ink: #f4f2fa;
+  --panel-muted: #a39fb8;
+  /* empty contribution cell */
+  --pt-empty: #e8e6f0;
 
   --font-display: "Helvetica Now Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-text: "Helvetica Now Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   --container: 1200px;
   --radius: 14px;
+}
+
+[data-theme="dark"] {
+  --bg: #131118;
+  --bg-alt: #191624;
+  --surface: #1b1826;
+  --ink: #eceaf4;
+  --ink-soft: #b6b1c9;
+  --muted: #87829a;
+  --hairline: #2a2639;
+  --hairline-strong: #3a3550;
+  --accent: #a78bfa;
+  --accent-dark: #9270e8;
+  --accent-tint: #2c2547;
+  --accent-contrast: #161320;
+  --panel: #0d0b13;
+  --panel-ink: #eceaf4;
+  --panel-muted: #8f8aa5;
+  --pt-empty: #211d30;
 }
 
 * {
@@ -98,7 +140,7 @@ a {
 }
 
 .eyebrow--light {
-  color: #b0aea5;
+  color: var(--panel-muted);
 }
 
 /* ---------- buttons ---------- */
@@ -139,13 +181,13 @@ a {
 
 .btn-outline-light {
   background: transparent;
-  border-color: rgba(250, 249, 245, 0.35);
-  color: var(--bg);
+  border-color: color-mix(in srgb, var(--panel-ink) 35%, transparent);
+  color: var(--panel-ink);
 }
 
 .btn-outline-light:hover {
-  border-color: var(--bg);
-  background: rgba(250, 249, 245, 0.08);
+  border-color: var(--panel-ink);
+  background: color-mix(in srgb, var(--panel-ink) 8%, transparent);
 }
 
 .btn-sm {
@@ -159,7 +201,7 @@ a {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(250, 249, 245, 0.86);
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--hairline);
@@ -224,6 +266,26 @@ a {
   border-radius: 2px;
   background: var(--ink);
   transition: transform 0.15s ease;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--ink);
 }
 
 /* ---------- hero ---------- */
@@ -463,8 +525,31 @@ a {
 }
 
 .project-card--highlight {
-  background: #fffdf9;
-  border-color: #e9d5c8;
+  background: var(--accent-tint);
+  border-color: var(--hairline-strong);
+}
+
+.project-card {
+  cursor: pointer;
+}
+
+.project-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.project-hint {
+  display: block;
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.project-card:hover .project-hint,
+.project-card:focus-visible .project-hint {
+  color: var(--accent-dark);
 }
 
 .project-head {
@@ -583,6 +668,104 @@ a {
   background: var(--accent-tint);
 }
 
+/* ---------- project detail modal ---------- */
+
+.pm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(19, 17, 24, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.pm-panel {
+  position: relative;
+  width: min(780px, 100%);
+  max-height: min(85vh, 900px);
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 64px rgba(19, 17, 24, 0.28);
+}
+
+.pm-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.pm-close:hover {
+  color: var(--ink);
+  border-color: var(--muted);
+}
+
+.pm-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.pm-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.pm-body {
+  padding: 28px 32px 32px;
+}
+
+.pm-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pm-head h3 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.pm-detail {
+  margin-top: 14px;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.pm-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+}
+
+.pm-foot .project-tags {
+  margin-top: 0;
+}
+
 /* ---------- push tracker ---------- */
 
 .push-tracker {
@@ -617,7 +800,7 @@ a {
   width: 12px;
   height: 12px;
   border-radius: 3px;
-  background: #efede5;
+  background: var(--pt-empty);
 }
 
 .pt-cell.l1 {
@@ -733,6 +916,12 @@ a {
   height: 9px;
   border-radius: 50%;
   display: inline-block;
+}
+
+.repo-lang-icon {
+  width: 13px;
+  height: 13px;
+  flex: none;
 }
 
 /* ---------- skills carousel ---------- */
@@ -960,8 +1149,8 @@ a {
 /* ---------- contact / footer ---------- */
 
 .contact {
-  background: #141413;
-  color: var(--bg);
+  background: var(--panel);
+  color: var(--panel-ink);
   padding-top: 120px;
 }
 
@@ -976,7 +1165,7 @@ a {
   margin-top: 20px;
   max-width: 55ch;
   font-size: 17px;
-  color: #b0aea5;
+  color: var(--panel-muted);
 }
 
 .contact-actions {
@@ -988,7 +1177,7 @@ a {
 
 .contact .btn-primary {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .contact .btn-primary:hover {
@@ -1002,11 +1191,56 @@ a {
   gap: 16px;
   margin-top: 96px;
   padding-block: 28px;
-  border-top: 1px solid rgba(250, 249, 245, 0.12);
+  border-top: 1px solid color-mix(in srgb, var(--panel-ink) 12%, transparent);
   font-size: 13px;
-  color: #8a887c;
+  color: var(--panel-muted);
 }
 
+/* ---------- custom cursor ---------- */
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.cursor-dot span {
+  display: block;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform 0.18s ease;
+}
+
+.cursor-dot--pressed span {
+  transform: scale(0.7);
+}
+
+.cursor-ring span {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: transform 0.22s ease, border-color 0.22s ease, background-color 0.22s ease;
+}
+
+.cursor-ring--active span {
+  transform: scale(1.35);
+  border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
 /* ---------- wide screens ---------- */
 
 @media (min-width: 1560px) {
