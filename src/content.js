@@ -187,7 +187,7 @@ export const projects = [
   {
     title: "Location-Based Treasure Hunt App",
     year: "2024",
-    role: "Personal project · Cross-platform",
+    role: "University project · Mobile Development",
     description:
       "A GPS and proximity-driven React Native game where players claim hidden caches based on physical location and device orientation, backed by a RESTful API.",
     features: [
@@ -248,7 +248,7 @@ export const githubRepos = [
   {
     name: "MAD-Treasure-Hunt",
     description:
-      "GPS and proximity-driven React Native treasure hunt — players claim hidden caches from physical location.",
+      "GPS and proximity-driven React Native treasure hunt built for my mobile development coursework — players claim hidden caches from physical location.",
     language: "JavaScript",
     stars: 0,
     url: `https://github.com/${GITHUB_USER}/MAD-Treasure-Hunt`,
