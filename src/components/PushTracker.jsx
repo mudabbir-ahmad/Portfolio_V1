@@ -40,45 +40,71 @@ function levelMap(counts) {
   return levels;
 }
 
-async function fetchContributions(fromIso) {
-  const res = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${TOKEN}`,
-    },
-    body: JSON.stringify({
-      query: `{
-        viewer {
-          contributionsCollection(from: "${fromIso}T00:00:00Z") {
-            totalCommitContributions
-            totalPullRequestContributions
-            totalIssueContributions
-            totalPullRequestReviewContributions
-            contributionCalendar {
-              weeks {
-                contributionDays {
-                  date
-                  contributionCount
+async function fetchContributions(fromIso, toIso) {
+  async function run(from) {
+    const res = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      body: JSON.stringify({
+        query: `{
+          viewer {
+            contributionsCollection(from: "${from}T00:00:00Z") {
+              totalCommitContributions
+              totalPullRequestContributions
+              totalIssueContributions
+              totalPullRequestReviewContributions
+              contributionCalendar {
+                weeks {
+                  contributionDays {
+                    date
+                    contributionCount
+                  }
                 }
               }
             }
           }
-        }
-      }`,
-    }),
-  });
-  const json = await res.json();
-  if (!res.ok || json.errors) {
-    throw new Error(json.errors?.[0]?.message || `GraphQL ${res.status}`);
+        }`,
+      }),
+    });
+    const json = await res.json();
+    if (!res.ok || json.errors) {
+      throw new Error(json.errors?.[0]?.message || `GraphQL ${res.status}`);
+    }
+    return json.data.viewer.contributionsCollection;
   }
 
-  const cc = json.data.viewer.contributionsCollection;
+  // GitHub caps contributionCalendar at 366 days from `from`, but the 53-week
+  // grid spans up to 371 days (Tue-Sat). Fetch the truncated tail separately.
   const counts = new Map();
-  for (const week of cc.contributionCalendar.weeks) {
-    for (const day of week.contributionDays) {
-      if (day.contributionCount > 0) counts.set(day.date, day.contributionCount);
+  let maxDay = null;
+  function absorb(cc) {
+    for (const week of cc.contributionCalendar.weeks) {
+      for (const day of week.contributionDays) {
+        if (!maxDay || day.date > maxDay) maxDay = day.date;
+        if (day.contributionCount > 0) counts.set(day.date, day.contributionCount);
+      }
     }
+  }
+
+  let cc = await run(fromIso);
+  absorb(cc);
+  let commits = cc.totalCommitContributions;
+  let prs = cc.totalPullRequestContributions;
+  let issues = cc.totalIssueContributions;
+  let reviews = cc.totalPullRequestReviewContributions;
+
+  if (maxDay < toIso) {
+    const [y, m, d] = maxDay.split("-").map(Number);
+    const tailFrom = dayKey(addDays(new Date(y, m - 1, d), 1));
+    const tail = await run(tailFrom);
+    absorb(tail);
+    commits += tail.totalCommitContributions;
+    prs += tail.totalPullRequestContributions;
+    issues += tail.totalIssueContributions;
+    reviews += tail.totalPullRequestReviewContributions;
   }
 
   let last = null;
@@ -91,10 +117,10 @@ async function fetchContributions(fromIso) {
   return {
     counts,
     total: calendarSum,
-    commits: cc.totalCommitContributions,
-    prs: cc.totalPullRequestContributions,
-    issues: cc.totalIssueContributions,
-    reviews: cc.totalPullRequestReviewContributions,
+    commits,
+    prs,
+    issues,
+    reviews,
     last,
   };
 }
@@ -114,7 +140,7 @@ export default function PushTracker() {
         const today = new Date();
         const thisSunday = addDays(today, -today.getDay());
         const gridStart = addDays(thisSunday, -(WEEKS - 1) * 7);
-        const result = await fetchContributions(dayKey(gridStart));
+        const result = await fetchContributions(dayKey(gridStart), dayKey(today));
         if (cancelled) return;
         setData(result);
         setStatus("ready");
