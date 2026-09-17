@@ -1180,6 +1180,18 @@ a {
   margin-top: 40px;
 }
 
+.contact-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.contact-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
 .contact .btn-primary {
   background: var(--accent);
   color: var(--accent-contrast);
