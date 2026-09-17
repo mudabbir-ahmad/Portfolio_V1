@@ -33,6 +33,7 @@
   --accent-dark: #c25f3f;
   --accent-tint: #f4e4d8;
   --accent-contrast: #ffffff;
+  --status-open: #2e7d4f;
   /* always-dark panel (contact section) */
   --panel: #211e19;
   --panel-ink: #f4f1ea;
@@ -64,6 +65,7 @@
   --accent-dark: #9270e8;
   --accent-tint: #2c2547;
   --accent-contrast: #161320;
+  --status-open: #54c98a;
   --panel: #0d0b13;
   --panel-ink: #eceaf4;
   --panel-muted: #8f8aa5;
@@ -339,7 +341,7 @@ a {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--status-open);
   animation: availability-pulse 2.4s ease-in-out infinite;
 }
 
