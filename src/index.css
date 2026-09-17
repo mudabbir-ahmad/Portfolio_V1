@@ -20,25 +20,29 @@
 }
 
 :root {
-  /* light theme (default) */
-  --bg: #f7f6f9;
-  --bg-alt: #efedf4;
-  --surface: #ffffff;
-  --ink: #17151f;
-  --ink-soft: #54505e;
-  --muted: #8b8798;
-  --hairline: #e4e2ec;
-  --hairline-strong: #cfcbe0;
-  --accent: #6c4fd8;
-  --accent-dark: #5a3fb8;
-  --accent-tint: #ece7fa;
+  /* light theme (default) — Anthropic cream / orange */
+  --bg: #f5f2ea;
+  --bg-alt: #ece7da;
+  --surface: #fbfaf6;
+  --ink: #1c1a16;
+  --ink-soft: #56524a;
+  --muted: #8b8474;
+  --hairline: #e1dccd;
+  --hairline-strong: #cbc4b0;
+  --accent: #d97757;
+  --accent-dark: #c25f3f;
+  --accent-tint: #f4e4d8;
   --accent-contrast: #ffffff;
   /* always-dark panel (contact section) */
-  --panel: #17151f;
-  --panel-ink: #f4f2fa;
-  --panel-muted: #a39fb8;
-  /* empty contribution cell */
-  --pt-empty: #e8e6f0;
+  --panel: #211e19;
+  --panel-ink: #f4f1ea;
+  --panel-muted: #a39b8a;
+  /* contribution cells (light) */
+  --pt-empty: #eae4d5;
+  --pt-l1: #ecd9c4;
+  --pt-l2: #dfb28f;
+  --pt-l3: #d97757;
+  --pt-l4: #a84e31;
 
   --font-display: "Helvetica Now Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-text: "Helvetica Now Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -64,6 +68,10 @@
   --panel-ink: #eceaf4;
   --panel-muted: #8f8aa5;
   --pt-empty: #211d30;
+  --pt-l1: #e0d6f2;
+  --pt-l2: #c6b2e8;
+  --pt-l3: #a184d6;
+  --pt-l4: #7050bd;
 }
 
 * {
@@ -804,24 +812,19 @@ a {
 }
 
 .pt-cell.l1 {
-  background: #e0d6f2;
+  background: var(--pt-l1);
 }
 
 .pt-cell.l2 {
-  background: #c6b2e8;
+  background: var(--pt-l2);
 }
 
 .pt-cell.l3 {
-  background: #a184d6;
+  background: var(--pt-l3);
 }
 
 .pt-cell.l4 {
-  background: #7050bd;
-}
-
-.pt-cell.is-future {
-  opacity: 0;
-  pointer-events: none;
+  background: var(--pt-l4);
 }
 
 .pt-note {
@@ -1198,8 +1201,7 @@ a {
 
 /* ---------- custom cursor ---------- */
 
-.cursor-dot,
-.cursor-ring {
+.cursor-dot {
   position: fixed;
   top: 0;
   left: 0;
@@ -1209,32 +1211,13 @@ a {
 
 .cursor-dot span {
   display: block;
-  width: 7px;
-  height: 7px;
-  margin: -3.5px 0 0 -3.5px;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
   border-radius: 50%;
   background: var(--accent);
-  transition: transform 0.18s ease;
-}
-
-.cursor-dot--pressed span {
-  transform: scale(0.7);
-}
-
-.cursor-ring span {
-  display: block;
-  width: 30px;
-  height: 30px;
-  margin: -15px 0 0 -15px;
-  border-radius: 50%;
-  border: 1.5px solid color-mix(in srgb, var(--accent) 45%, transparent);
-  transition: transform 0.22s ease, border-color 0.22s ease, background-color 0.22s ease;
-}
-
-.cursor-ring--active span {
-  transform: scale(1.35);
-  border-color: color-mix(in srgb, var(--accent) 70%, transparent);
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  transform: translate3d(-100px, -100px, 0);
+  will-change: transform;
 }
 
 html.has-custom-cursor,

@@ -142,12 +142,13 @@ export default function PushTracker() {
       const cells = [];
       for (let dow = 0; dow < 7; dow++) {
         const day = addDays(gridStart, w * 7 + dow);
+        if (day > today) break; // future days don't render
         const key = dayKey(day);
         const count = data.counts.get(key) || 0;
         cells.push(
           <span
             key={key}
-            className={`pt-cell l${levels.get(key) || 0}${day > today ? " is-future" : ""}`}
+            className={`pt-cell l${levels.get(key) || 0}`}
             title={count ? `${count} contribution${count === 1 ? "" : "s"} on ${fmtDay(key)}` : fmtDay(key)}
           />
         );
