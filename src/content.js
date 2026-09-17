@@ -353,14 +353,17 @@ export const localAI = {
   ],
 };
 
-// Share of code across my 27 self-made GitHub repos, excluding AI-agent-built
-// repos and this site's repo. Jupyter Notebook bytes count as Python.
-// Snapshot via the GitHub API on 2026-09-17; refresh by re-fetching /languages
-// per repo and re-aggregating bytes.
+// Self-assessed working proficiency, not a byte share: weighted by how many
+// projects were built in each language and current fluency, not raw lines.
+// Java leads; C++/Go mid-band; Python eased down (fewer recent projects);
+// JS/CSS raised on project count; TypeScript low — known via JavaScript only.
 export const languageStats = [
-  { name: "Python", pct: 55.9 },
-  { name: "JavaScript", pct: 33.3 },
-  { name: "TypeScript", pct: 4.7 },
-  { name: "Kotlin", pct: 3.1 },
-  { name: "CSS", pct: 1.1 },
+  { name: "Java", pct: 56 },
+  { name: "JavaScript", pct: 48 },
+  { name: "Python", pct: 28 },
+  { name: "C++", pct: 22 },
+  { name: "Go", pct: 18 },
+  { name: "CSS", pct: 16 },
+  { name: "TypeScript", pct: 14 },
+  { name: "Kotlin", pct: 12 },
 ];

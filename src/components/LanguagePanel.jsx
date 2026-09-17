@@ -47,7 +47,7 @@ export default function LanguagePanel() {
       <div className="lang-panel-head">
         <h3 className="lang-panel-title">Language proficiency</h3>
         <span className="lang-panel-sub">
-          Share of code across my 27 self-made GitHub repos
+          Self-assessed proficiency, weighted by projects built
         </span>
       </div>
 
