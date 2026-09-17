@@ -130,6 +130,19 @@ export const projects = [
     highlight: true,
   },
   {
+    title: "Hardware Tinkering — 240 GHz Doppler Radar",
+    role: "Hardware project · ESP32",
+    description:
+      "A 240 GHz radio-frequency setup that uses the Doppler effect to track three moving targets, with an Arduino ESP32 board processing the sensor data and serving live results as a website.",
+    features: [
+      "240 GHz RF sensing exploiting the Doppler shift for motion tracking",
+      "Tracks three moving targets simultaneously",
+      "ESP32 board processes the raw sensor signal in real time",
+      "Live results served through a web interface",
+    ],
+    stack: ["ESP32", "Arduino"],
+  },
+  {
     title: "QR Code Treasure Hunt",
     year: "2024",
     role: "Group project · Year 2 final coursework",
