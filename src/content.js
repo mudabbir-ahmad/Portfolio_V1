@@ -42,7 +42,7 @@ export const profile = {
 // Numbers shown in the stats strip under the hero.
 export const stats = [
   { value: "7+", label: "Projects built end to end" },
-  { value: "17", label: "Languages & frameworks" },
+  { value: "19", label: "Languages & frameworks" },
   { value: "15", label: "Self-hosted services running" },
   { value: "1:1", label: "First-class BSc Computer Science" },
 ];
@@ -54,7 +54,7 @@ export const experience = [
     title: "Graduate Software Engineer",
     org: "Open to roles · London / Remote",
     detail:
-      "Seeking graduate and early-career software engineering roles. Open to placements, contracts, and full-time starts.",
+      "Seeking graduate and early-career software engineering roles. Open to full-time starts only.",
   },
   {
     period: "Summers 2020 — 2026",
@@ -233,11 +233,34 @@ export const githubRepos = [
     url: `https://github.com/${GITHUB_USER}/Treasure-Hunt-App`,
   },
   {
+    name: "MAD-Treasure-Hunt",
+    description:
+      "GPS and proximity-driven React Native treasure hunt — players claim hidden caches from physical location.",
+    language: "JavaScript",
+    stars: 0,
+    url: `https://github.com/${GITHUB_USER}/MAD-Treasure-Hunt`,
+  },
+  {
+    name: "Kotlin-TB2P1",
+    description:
+      "Native Android habit tracker in Kotlin — MVVM architecture, Room persistence, and reminder notifications.",
+    language: "Kotlin",
+    stars: 0,
+    url: `https://github.com/${GITHUB_USER}/Kotlin-TB2P1`,
+  },
+  {
     name: "Project-MAD-crudler",
     description: "University project for learning React Native — a CRUD(L) demo app.",
     language: "JavaScript",
     stars: 0,
     url: `https://github.com/${GITHUB_USER}/Project-MAD-crudler`,
+  },
+  {
+    name: "LearningGo",
+    description: "Small programs and notes from my self-taught Go journey.",
+    language: "Go",
+    stars: 0,
+    url: `https://github.com/${GITHUB_USER}/LearningGo`,
   },
   {
     name: "Opera-GX-Styled-Floorp-Sidebar",
@@ -258,11 +281,13 @@ export const skills = {
     "HTML",
     "CSS",
     "JavaScript",
+    "TypeScript",
     "Python",
     "Bash",
     "PHP",
     "SQL",
     "JSON",
+    "LaTeX",
     "React.js",
     "Node.js",
     "Express.js",
@@ -272,11 +297,13 @@ export const skills = {
     "IntelliJ IDEA",
     "WebStorm",
     "PyCharm",
+    "Jupyter",
     "Arduino IDE",
     "Docker",
     "Git",
     "RESTful APIs",
     "VS Code",
+    "NeoVim",
     "Android Studio",
     "Expo",
     "Linux",
@@ -302,7 +329,7 @@ export const homelab = [
   { name: "Vaultwarden", detail: "Self-hosted password manager" },
   { name: "Immich", detail: "Private photo and video library" },
   { name: "Home Assistant", detail: "Home automation hub" },
-  { name: "Termux", detail: "Android terminal for on-the-go lab access" },
+  { name: "Termix", detail: "Self-built containerised SSH manager for hopping between device sessions via a central web UI" },
 ];
 
 export const localAI = {
@@ -312,3 +339,15 @@ export const localAI = {
     "It's not just theory: my Discord bot pairs a Cloud Gemma 4 31B-IT model for text chat and voice with a local Gemma 4 E4B QAT fallback.",
   ],
 };
+
+// Share of code across my 27 self-made GitHub repos, excluding AI-agent-built
+// repos and this site's repo. Jupyter Notebook bytes count as Python.
+// Snapshot via the GitHub API on 2026-09-17; refresh by re-fetching /languages
+// per repo and re-aggregating bytes.
+export const languageStats = [
+  { name: "Python", pct: 55.9 },
+  { name: "JavaScript", pct: 33.3 },
+  { name: "TypeScript", pct: 4.7 },
+  { name: "Kotlin", pct: 3.1 },
+  { name: "CSS", pct: 1.1 },
+];
