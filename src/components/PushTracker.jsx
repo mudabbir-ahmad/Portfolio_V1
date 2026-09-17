@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
-import { profile } from "../content.js";
 
-const WEEKS = 13;
-const MAX_PAGES = 5;
-
-function startOfLocalDay(d) {
-  const x = new Date(d);
-  x.setHours(0, 0, 0, 0);
-  return x;
-}
+const WEEKS = 53; // trailing year, same span as GitHub's default graph
+const MAX_LEVEL = 4;
+const TOKEN = import.meta.env.VITE_GITHUB_TOKEN || "";
 
 function addDays(d, n) {
   const x = new Date(d);
@@ -22,51 +16,86 @@ function dayKey(d) {
   ).padStart(2, "0")}`;
 }
 
-function fmtDay(d) {
-  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+function fmtDay(iso) {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 }
 
-function levelFor(count) {
-  if (count <= 0) return 0;
-  if (count === 1) return 1;
-  if (count <= 3) return 2;
-  if (count <= 6) return 3;
-  return 4;
-}
-
-async function fetchPushCounts(cutoff) {
-  const counts = new Map();
-  let totalPushes = 0;
-  let lastPush = null;
-
-  for (let page = 1; page <= MAX_PAGES; page++) {
-    const res = await fetch(
-      `https://api.github.com/users/${profile.githubUser}/events/public?per_page=100&page=${page}`,
-      { headers: { Accept: "application/vnd.github+json" } }
-    );
-    if (!res.ok) throw new Error(`GitHub API responded ${res.status}`);
-    const events = await res.json();
-    if (!Array.isArray(events) || events.length === 0) break;
-
-    let oldest = null;
-    for (const ev of events) {
-      const created = new Date(ev.created_at);
-      oldest = oldest === null ? created : (created < oldest ? created : oldest);
-      if (ev.type !== "PushEvent") continue;
-      const day = startOfLocalDay(created);
-      if (day < cutoff) continue;
-      const k = dayKey(day);
-      counts.set(k, (counts.get(k) || 0) + 1);
-      totalPushes += 1;
-      if (lastPush === null || created > lastPush) lastPush = created;
+// GitHub-style levels: quartiles over the non-zero days.
+function levelMap(counts) {
+  const active = [...counts.values()].filter((n) => n > 0).sort((a, b) => a - b);
+  const levels = new Map();
+  for (const [day, n] of counts) {
+    if (n === 0) continue;
+    let lo = 0;
+    let hi = active.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (active[mid] < n) lo = mid + 1;
+      else hi = mid;
     }
+    levels.set(day, Math.min(MAX_LEVEL, Math.floor((lo / active.length) * MAX_LEVEL) + 1));
+  }
+  return levels;
+}
 
-    // Events arrive newest-first: once this page reaches past the window,
-    // older pages can't contribute anything.
-    if (oldest !== null && oldest < cutoff) break;
+async function fetchContributions(fromIso) {
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${TOKEN}`,
+    },
+    body: JSON.stringify({
+      query: `{
+        viewer {
+          contributionsCollection(from: "${fromIso}T00:00:00Z") {
+            totalCommitContributions
+            totalPullRequestContributions
+            totalIssueContributions
+            totalPullRequestReviewContributions
+            contributionCalendar {
+              weeks {
+                contributionDays {
+                  date
+                  contributionCount
+                }
+              }
+            }
+          }
+        }
+      }`,
+    }),
+  });
+  const json = await res.json();
+  if (!res.ok || json.errors) {
+    throw new Error(json.errors?.[0]?.message || `GraphQL ${res.status}`);
   }
 
-  return { counts, totalPushes, lastPush };
+  const cc = json.data.viewer.contributionsCollection;
+  const counts = new Map();
+  for (const week of cc.contributionCalendar.weeks) {
+    for (const day of week.contributionDays) {
+      if (day.contributionCount > 0) counts.set(day.date, day.contributionCount);
+    }
+  }
+
+  let last = null;
+  for (const day of counts.keys()) if (!last || day > last) last = day;
+
+  // Calendar sum matches GitHub's profile number (includes private contributions).
+  let calendarSum = 0;
+  for (const n of counts.values()) calendarSum += n;
+
+  return {
+    counts,
+    total: calendarSum,
+    commits: cc.totalCommitContributions,
+    prs: cc.totalPullRequestContributions,
+    issues: cc.totalIssueContributions,
+    reviews: cc.totalPullRequestReviewContributions,
+    last,
+  };
 }
 
 export default function PushTracker() {
@@ -74,16 +103,19 @@ export default function PushTracker() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
+    if (!TOKEN) {
+      setStatus("note");
+      return;
+    }
     let cancelled = false;
     (async () => {
       try {
-        const today = startOfLocalDay(new Date());
+        const today = new Date();
         const thisSunday = addDays(today, -today.getDay());
         const gridStart = addDays(thisSunday, -(WEEKS - 1) * 7);
-        const cutoff = addDays(gridStart, -5);
-        const result = await fetchPushCounts(cutoff);
+        const result = await fetchContributions(dayKey(gridStart));
         if (cancelled) return;
-        setData({ ...result, today, gridStart });
+        setData(result);
         setStatus("ready");
       } catch {
         if (!cancelled) setStatus("error");
@@ -96,28 +128,63 @@ export default function PushTracker() {
 
   let grid = null;
   let statsLine = null;
+
   if (status === "ready" && data) {
-    const { counts, totalPushes, lastPush, today, gridStart } = data;
-    const activeDays = counts.size;
+    const today = new Date();
+    const thisSunday = addDays(today, -today.getDay());
+    const gridStart = addDays(thisSunday, -(WEEKS - 1) * 7);
+    const levels = levelMap(data.counts);
+    const activeDays = [...data.counts.values()].filter((n) => n > 0).length;
 
     const columns = [];
-    for (let c = 0; c < WEEKS; c++) {
-      const week = [];
-      for (let r = 0; r < 7; r++) {
-        const day = addDays(gridStart, c * 7 + r);
-        const count = counts.get(dayKey(day)) || 0;
-        week.push({ day, count, future: day > today });
+    for (let w = 0; w < WEEKS; w++) {
+      const cells = [];
+      for (let dow = 0; dow < 7; dow++) {
+        const day = addDays(gridStart, w * 7 + dow);
+        const key = dayKey(day);
+        const count = data.counts.get(key) || 0;
+        cells.push(
+          <span
+            key={key}
+            className={`pt-cell l${levels.get(key) || 0}${day > today ? " is-future" : ""}`}
+            title={count ? `${count} contribution${count === 1 ? "" : "s"} on ${fmtDay(key)}` : fmtDay(key)}
+          />
+        );
       }
-      columns.push(week);
+      columns.push(
+        <div className="pt-col" key={w}>
+          {cells}
+        </div>
+      );
     }
-    grid = columns;
+
+    grid = (
+      <div className="pt-scroll">
+        <div className="pt-grid" role="img" aria-label={`Contribution graph: ${data.total} contributions in the last year`}>
+          {columns}
+        </div>
+      </div>
+    );
+
+    const parts = [`${data.commits} commit${data.commits === 1 ? "" : "s"}`];
+    if (data.prs) parts.push(`${data.prs} pull request${data.prs === 1 ? "" : "s"}`);
+    if (data.issues) parts.push(`${data.issues} issue${data.issues === 1 ? "" : "s"}`);
+    if (data.reviews) parts.push(`${data.reviews} review${data.reviews === 1 ? "" : "s"}`);
 
     statsLine = (
-      <p className="pt-stats">
-        {totalPushes} push{totalPushes === 1 ? "" : "es"} · {activeDays} active day
-        {activeDays === 1 ? "" : "s"}
-        {lastPush ? ` · last push ${fmtDay(lastPush)}` : ""}
-      </p>
+      <>
+        <span className="pt-stats">
+          {data.total} contributions in the last year · {activeDays} active days
+          {data.last ? ` · last ${fmtDay(data.last)}` : ""}: {parts.join(" · ")}
+        </span>
+        <span className="pt-legend">
+          less
+          {[0, 1, 2, 3, 4].map((l) => (
+            <span key={l} className={`pt-cell l${l}`} />
+          ))}
+          more
+        </span>
+      </>
     );
   }
 
@@ -125,49 +192,21 @@ export default function PushTracker() {
     <section className="push-tracker section" id="activity">
       <div className="container">
         <p className="eyebrow">Activity</p>
-        <h2 className="section-title">Push tracker</h2>
+        <h2 className="section-title">Contributions</h2>
         <p className="section-lede">
-          Every git push across my public repositories, pulled live from GitHub's
-          events API — the last 13 weeks.
+          Commits, pull requests and issues across all my repositories, public and private, pulled live from GitHub.
         </p>
+
         <div className="pt-card">
-          {status === "loading" && (
-            <p className="pt-note">Fetching push activity…</p>
+          {status === "loading" && <p className="pt-note">Fetching contribution activity…</p>}
+          {status === "note" && (
+            <p className="pt-note">Contribution data isn't available without a GitHub token.</p>
           )}
           {status === "error" && (
-            <p className="pt-note">Push activity is unavailable right now.</p>
+            <p className="pt-note">Contribution activity is unavailable right now.</p>
           )}
-          {status === "ready" && grid && (
-            <>
-              <div className="pt-grid" role="img" aria-label="Push activity heatmap, last 13 weeks">
-                {grid.map((week, c) => (
-                  <div className="pt-col" key={c}>
-                    {week.map((cell, r) => (
-                      <span
-                        key={r}
-                        className={`pt-cell l${cell.future ? 0 : levelFor(cell.count)}${cell.future ? " is-future" : ""}`}
-                        title={
-                          cell.future
-                            ? undefined
-                            : `${fmtDay(cell.day)} — ${cell.count} push${cell.count === 1 ? "" : "es"}`
-                        }
-                      />
-                    ))}
-                  </div>
-                ))}
-              </div>
-              <div className="pt-foot">
-                {statsLine}
-                <div className="pt-legend" aria-hidden="true">
-                  <span>less</span>
-                  {[0, 1, 2, 3, 4].map((l) => (
-                    <span className={`pt-cell l${l}`} key={l} />
-                  ))}
-                  <span>more</span>
-                </div>
-              </div>
-            </>
-          )}
+          {grid}
+          {statsLine && <div className="pt-foot">{statsLine}</div>}
         </div>
       </div>
     </section>

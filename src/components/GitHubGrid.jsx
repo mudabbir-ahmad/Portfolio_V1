@@ -11,7 +11,7 @@ export default function GitHubGrid() {
       <div className="container">
         <h2 className="section-title">On GitHub</h2>
         <p className="section-lede">
-          A curated selection from my 38 repositories — 27 self-made and 11
+          A curated selection from my 38 repositories: 27 self-made and 11
           fully agentic projects built with AI agents, to develop a feel for
           system design and AI-assisted software development. The full list
           lives on{" "}

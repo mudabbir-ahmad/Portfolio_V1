@@ -8,8 +8,7 @@ export default function Contact() {
         <p className="eyebrow eyebrow--light">Get in touch</p>
         <h2 className="contact-title">Let's talk.</h2>
         <p className="contact-lede">
-          I'm open to graduate and junior software engineering roles — or just a
-          good conversation about self-hosting.
+          I'm open to graduate and junior software engineering roles, or just a good conversation about self-hosting.
         </p>
         <div className="contact-actions">
           <a className="btn btn-primary" href={`mailto:${profile.email}`}>

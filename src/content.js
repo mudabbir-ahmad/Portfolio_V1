@@ -23,18 +23,18 @@ export const profile = {
   cvUrl: CV_URL,
 
   heroTagline:
-    "I build software end to end — from React front ends and mobile apps to the servers, networks, and self-hosted infrastructure that run them.",
+    "I build software end to end, from React front ends and mobile apps to the servers, networks, and self-hosted infrastructure that run them.",
 
   availability: "Open to graduate software engineering roles",
 
   education: {
-    degree: "BSc Computer Science & Distributed Systems (Hons)",
+    degree: "BSc Computer Science (Hons)",
     classification: "First Class (1:1)",
     institution: "Kingston University",
   },
 
   about: [
-    "I'm a recent graduate software engineer based in London. I studied Computer Science at first-class level, and spent my degree building real systems — a media aggregation & sorting system for my final-year project, mobile apps with React Native, and coursework that pushed me to think like an engineer, not just a coder.",
+    "I'm a recent graduate software engineer based in London. I studied Computer Science at first-class level, and spent my degree building real systems: a media aggregation & sorting system for my final-year project, mobile apps with React Native, and coursework that pushed me to think like an engineer, not just a coder.",
     "Outside of work I run a home lab: a Proxmox host carrying a stack of self-hosted services, three cloud VPS instances, and a growing interest in running local AI models on my own hardware. If it can be self-hosted, I've probably tried to.",
   ],
 };
@@ -50,36 +50,36 @@ export const stats = [
 // Experience & education timeline, newest first.
 export const experience = [
   {
-    period: "2025 — Present",
+    period: "2025 - Present",
     title: "Graduate Software Engineer",
     org: "Open to roles · London / Remote",
     detail:
       "Seeking graduate and early-career software engineering roles. Open to full-time starts only.",
   },
   {
-    period: "Summers 2020 — 2026",
+    period: "Summers 2020 - 2026",
     title: "Network Infrastructure Engineer (Volunteer)",
     org: "Jalsa Salana UK · Ahmadiyya Muslim Association",
     detail:
       "Engineered a high-availability network for 20,000+ concurrent users with 99.9% uptime, automating hardware monitoring via custom Linux scripts; configured hardware and structured cabling across multi-site event environments, troubleshooting in real time under time-critical conditions.",
   },
   {
-    period: "Nov 2025 — Feb 2026",
+    period: "Nov 2025 - Feb 2026",
     title: "Optical Assistant",
     org: "Specsavers · London",
     detail:
       "Managed sensitive patient data systems with 100% accuracy in a high-volume clinical environment; advised customers on eyewear options and completed sales; fitted and adjusted spectacle frames with precision.",
   },
   {
-    period: "2025 — 2026",
-    title: "Final-Year Project — MASS",
+    period: "2025 - 2026",
+    title: "Final-Year Project: MASS",
     org: "Kingston University",
     detail:
       "Built MASS (Media Aggregation & Sorting System), a cross-platform React Native app that aggregates media from device storage, Google Photos, and a home NAS into one timeline view, backed by a RESTful Express.js backend; cut data retrieval latency 30% via API caching.",
   },
   {
-    period: "2023 — 2026",
-    title: "BSc Computer Science (Hons) & Distributed Systems",
+    period: "2023 - 2026",
+    title: "BSc Computer Science (Hons)",
     org: "Kingston University · First Class (1:1)",
     detail:
       "Coursework spanning web and mobile development, databases, networking, and systems programming, capped by the MASS final-year project.",
@@ -91,7 +91,7 @@ export const interests = [
   {
     name: "Self-hosting",
     detail:
-      "If it can run on my own hardware, it probably does — a Proxmox host carrying a dozen services.",
+      "If it can run on my own hardware, it probably does, on a Proxmox host carrying a dozen services.",
   },
   {
     name: "Local LLMs",
@@ -101,12 +101,12 @@ export const interests = [
   {
     name: "Hardware tinkering",
     detail:
-      "Arduino projects and sensor experiments — the gyroscope treasure hunt started as one of those.",
+      "Arduino projects and sensor experiments; the gyroscope treasure hunt started as one of those.",
   },
   {
     name: "Browser mods",
     detail:
-      "Customising Floorp with an Opera GX–styled sidebar. Small UI details matter to me.",
+      "Customising Floorp with a sidebar styled after Opera GX. Small UI details matter to me.",
   },
 ];
 
@@ -114,11 +114,11 @@ export const interests = [
 // the highlight bullets; `stack` replaces the old tag list.
 export const projects = [
   {
-    title: "MASS — Media Aggregation & Sorting System",
+    title: "MASS: Media Aggregation & Sorting System",
     year: "2026",
     role: "Final-year project · Solo",
     description:
-      "A cross-platform React Native app that aggregates media from multiple services — device storage, Google Photos, and a home NAS — into one timeline view, backed by a RESTful Express.js backend.",
+      "A cross-platform React Native app that aggregates media from device storage, Google Photos, and a home NAS into one timeline view, backed by a RESTful Express.js backend.",
     features: [
       "Reduced data retrieval latency 30% through optimized API caching",
       "Metadata-driven sorting across diverse media types",
@@ -130,7 +130,7 @@ export const projects = [
     highlight: true,
   },
   {
-    title: "Hardware Tinkering — 240 GHz Doppler Radar",
+    title: "Hardware Tinkering: 240 GHz Doppler Radar",
     role: "Hardware project · ESP32",
     description:
       "A 240 GHz radio-frequency setup that uses the Doppler effect to track three moving targets, with an Arduino ESP32 board processing the sensor data and serving live results as a website.",
@@ -157,11 +157,11 @@ export const projects = [
     repo: `https://github.com/${GITHUB_USER}/Treasure-Hunt-App`,
   },
   {
-    title: "CRUDL — React Native Demo",
+    title: "CRUDL: React Native Demo",
     year: "2024",
     role: "University project",
     description:
-      "A full CRUD(L) application built to learn React Native properly — create, read, update, delete, and list flows across screens.",
+      "A full CRUD(L) application built to learn React Native properly: create, read, update, delete, and list flows across screens.",
     features: [
       "Complete CRUD(L) flows across multiple screens",
       "Navigation between list, detail, and edit views",
@@ -217,7 +217,7 @@ export const projects = [
     year: "2022",
     role: "Personal project · Desktop",
     description:
-      "A desktop CV builder written in Java with a Swing interface — form-driven editing that generates a clean, printable CV.",
+      "A desktop CV builder written in Java with a Swing interface: form-driven editing that generates a clean, printable CV.",
     features: [
       "Form-driven editing of CV sections",
       "Live preview before export",
@@ -232,7 +232,7 @@ export const githubRepos = [
   {
     name: "Abstracted-MASS-PublicVer",
     description:
-      "Public version of my final-year project — a media aggregation & sorting app across device storage, Google Photos, and a home NAS.",
+      "Public version of my final-year project: a media aggregation & sorting app across device storage, Google Photos, and a home NAS.",
     language: "JavaScript",
     stars: 1,
     url: `https://github.com/${GITHUB_USER}/Abstracted-MASS-PublicVer`,
@@ -248,7 +248,7 @@ export const githubRepos = [
   {
     name: "MAD-Treasure-Hunt",
     description:
-      "GPS and proximity-driven React Native treasure hunt built for my mobile development coursework — players claim hidden caches from physical location.",
+      "GPS and proximity-driven React Native treasure hunt built for my mobile development coursework; players claim hidden caches from physical location.",
     language: "JavaScript",
     stars: 0,
     url: `https://github.com/${GITHUB_USER}/MAD-Treasure-Hunt`,
@@ -256,14 +256,14 @@ export const githubRepos = [
   {
     name: "Kotlin-TB2P1",
     description:
-      "Native Android habit tracker in Kotlin — MVVM architecture, Room persistence, and reminder notifications.",
+      "Native Android habit tracker in Kotlin: MVVM architecture, Room persistence, and reminder notifications.",
     language: "Kotlin",
     stars: 0,
     url: `https://github.com/${GITHUB_USER}/Kotlin-TB2P1`,
   },
   {
     name: "Project-MAD-crudler",
-    description: "University project for learning React Native — a CRUD(L) demo app.",
+    description: "University project for learning React Native: a CRUD(L) demo app.",
     language: "JavaScript",
     stars: 0,
     url: `https://github.com/${GITHUB_USER}/Project-MAD-crudler`,
@@ -277,7 +277,7 @@ export const githubRepos = [
   },
   {
     name: "Opera-GX-Styled-Floorp-Sidebar",
-    description: "Opera GX–styled sidebar mod for the Floorp browser.",
+    description: "Sidebar mod for the Floorp browser, styled after Opera GX.",
     language: "CSS",
     stars: 0,
     url: `https://github.com/${GITHUB_USER}/Opera-GX-Styled-Floorp-Sidebar`,
@@ -329,7 +329,7 @@ export const skills = {
 
 export const homelab = [
   { name: "Proxmox", detail: "Single-node hypervisor running the whole stack" },
-  { name: "Jellyfin + own media server", detail: "Self-hosted streaming — media server WIP" },
+  { name: "Jellyfin + own media server", detail: "Self-hosted streaming (media server WIP)" },
   { name: "SearXNG", detail: "Private metasearch engine" },
   { name: "Dockhand", detail: "Container management UI" },
   { name: "Nginx", detail: "Reverse proxy for the house network" },
@@ -348,7 +348,7 @@ export const homelab = [
 export const localAI = {
   heading: "Local AI, on my own hardware",
   body: [
-    "I run self-hosted language models on hardware I own — currently a custom flavour of Qwen 3.8 27B served through LM Studio and OpenWebUI — as a way to learn how LLMs actually work under the hood: inference, context, and serving.",
+    "I run self-hosted language models on hardware I own, currently a custom flavour of Qwen 3.8 27B served through LM Studio and OpenWebUI, as a way to learn how LLMs actually work under the hood: inference, context, and serving.",
     "It's not just theory: my Discord bot pairs a Cloud Gemma 4 31B-IT model for text chat and voice with a local Gemma 4 E4B QAT fallback.",
   ],
 };

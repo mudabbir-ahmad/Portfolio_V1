@@ -597,6 +597,11 @@ a {
   padding: 28px;
 }
 
+.pt-scroll {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
 .pt-grid {
   display: flex;
   gap: 3px;

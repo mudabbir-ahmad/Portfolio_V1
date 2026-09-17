@@ -11,7 +11,7 @@ export default function Projects() {
         <p className="eyebrow">Selected work</p>
         <h2 className="section-title">Projects, in detail</h2>
         <p className="section-lede">
-          A selection of projects that show how I work — from final-year
+          A selection of projects that show how I work, from final-year
           systems to self-hosted experiments.
         </p>
         <div className="project-grid">

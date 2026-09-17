@@ -6,7 +6,7 @@ export default function Homelab() {
       <div className="container">
         <h2 className="section-title">Homelab &amp; side endeavours</h2>
         <p className="section-lede">
-          Everything below runs on hardware I own — a single Proxmox node at home,
+          Everything below runs on hardware I own: a single Proxmox node at home,
           three cloud VPS instances, and the services that live on top of them.
         </p>
         <ul className="homelab-grid">
