@@ -583,6 +583,87 @@ a {
   background: var(--accent-tint);
 }
 
+/* ---------- push tracker ---------- */
+
+.push-tracker {
+  border-top: 1px solid var(--hairline);
+}
+
+.pt-card {
+  margin-top: 48px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+
+.pt-grid {
+  display: flex;
+  gap: 3px;
+}
+
+.pt-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pt-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: #efede5;
+}
+
+.pt-cell.l1 {
+  background: #e0d6f2;
+}
+
+.pt-cell.l2 {
+  background: #c6b2e8;
+}
+
+.pt-cell.l3 {
+  background: #a184d6;
+}
+
+.pt-cell.l4 {
+  background: #7050bd;
+}
+
+.pt-cell.is-future {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pt-note {
+  color: var(--muted);
+  font-size: 15px;
+  padding: 24px 0;
+}
+
+.pt-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.pt-stats {
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.pt-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
 /* ---------- github ---------- */
 
 .github {
