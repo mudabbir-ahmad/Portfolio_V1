@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { profile } from "../content.js";
 
 // Monochrome platform glyphs, same pattern as skill-icons.js (simple-icons MIT / lucide ISC).
@@ -15,7 +16,7 @@ const contactIcons = {
   linkedin: {
     vb: "0 0 24 24",
     inner:
-      '<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.048c.477-.9 1.637-1.85 3.378-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.04 9.429C3.89 9.429 2.967 8.511 2.967 7.365c0-1.154.926-2.074 2.073-2.074 1.146 0 2.074.92 2.074 2.074 0 1.146-.922 2.068-2.075 2.073zm.004 11.02h-3.44V9h3.44v11.45zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>',
+      '<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.048c.477-.9 1.637-1.85 3.378-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.04 9.429C3.89 9.429 2.967 8.511 2.967 7.365c0-1.154.926-2.074 2.073-2.074 1.146 0 2.074.92 2.074 2.074 0 1.146-.922 2.068-2.075 2.073zm.004 11.02h-3.44V9h3.44v11.45z"/>',
   },
 };
 
@@ -31,6 +32,37 @@ function ContactGlyph({ name }) {
     />
   );
 }
+function PrivacyNote() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="privacy-note">
+      <button
+        type="button"
+        className="privacy-toggle"
+        aria-expanded={open}
+        aria-controls="privacy-panel"
+        onClick={() => setOpen((o) => !o)}
+      >
+        Privacy
+      </button>
+      {open && (
+        <div id="privacy-panel" className="privacy-panel">
+          <p>
+            <strong>{profile.name}</strong> ({profile.email}) is the data controller for this
+            site. No cookies, analytics, or third-party trackers are used, and nothing you do here
+            is logged or stored on a server. Your light/dark theme choice is saved in your
+            browser's local storage only and is never transmitted anywhere. The Contributions
+            graph above is fetched by this site's own server, not your browser, so GitHub never
+            sees you as a visitor. If you email me, I'll only use your details to reply. Under UK
+            GDPR you can request access to or deletion of any data held about you by emailing{" "}
+            {profile.email}.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Contact() {
   const year = new Date().getFullYear();
   return (
@@ -60,7 +92,10 @@ export default function Contact() {
         <span>
           {profile.name} · {profile.location}
         </span>
-        <span>{year}</span>
+        <span className="footer-bar-right">
+          <PrivacyNote />
+          <span>{year}</span>
+        </span>
       </div>
     </footer>
   );

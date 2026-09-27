@@ -122,7 +122,7 @@ export const projects = [
       "A cross-platform React Native app that aggregates media from device storage, Google Photos, and a home NAS into one timeline view, backed by a RESTful Express.js backend.",
     image: "/images/projects/mass.svg",
     detail:
-      "Built as my final-year project, MASS pulls media from three sources — device storage, Google Photos, and a Synology NAS on the home network — and merges them into one chronological timeline. The Express backend sits between the app and each source, normalising metadata so sorting by date, type, or location stays consistent regardless of where the file lives. Most of my engineering time went into the caching layer: repeated timeline fetches hit the cache instead of re-querying all three sources, which is where the 30% latency reduction came from.",
+      "Built as my final-year project, MASS pulls media from three sources: device storage, Google Photos, and a Synology NAS on the home network, and merges them into one chronological timeline. The Express backend sits between the app and each source, normalising metadata so sorting by date, type, or location stays consistent regardless of where the file lives. Most of my engineering time went into the caching layer: repeated timeline fetches hit the cache instead of re-querying all three sources, which is where the 30% latency reduction came from.",
     features: [
       "Reduced data retrieval latency 30% through optimized API caching",
       "Metadata-driven sorting across diverse media types",
@@ -140,7 +140,7 @@ export const projects = [
       "A 240 GHz radio-frequency setup that uses the Doppler effect to track three moving targets, with an Arduino ESP32 board processing the sensor data and serving live results as a website.",
     image: "/images/projects/radar.svg",
     detail:
-      "A hardware build around a 240 GHz Doppler radar module and an ESP32. The board samples the RF signal, extracts velocity from the Doppler shift, and keeps track of up to three targets at once. Results stream over Wi-Fi to a small web dashboard I wrote so I could watch the tracking live — half project, half excuse to get comfortable with raw sensor data.",
+      "A hardware build around a 240 GHz Doppler radar module and an ESP32. The board samples the RF signal, extracts velocity from the Doppler shift, and keeps track of up to three targets at once. Results stream over Wi-Fi to a small web dashboard I wrote so I could watch the tracking live. Half project, half excuse to get comfortable with raw sensor data.",
     features: [
       "240 GHz RF sensing exploiting the Doppler shift for motion tracking",
       "Tracks three moving targets simultaneously",
@@ -174,7 +174,7 @@ export const projects = [
       "A full CRUD(L) application built to learn React Native properly: create, read, update, delete, and list flows across screens.",
     image: "/images/projects/crudl.svg",
     detail:
-      "A deliberately small React Native app that exists because I wanted to actually understand the framework before building anything big on it. It walks through the full create-read-update-delete-list cycle with separate screens for list, detail, and edit — and the navigation between them is where most of my learning happened.",
+      "A deliberately small React Native app that exists because I wanted to actually understand the framework before building anything big on it. It walks through the full create-read-update-delete-list cycle with separate screens for list, detail, and edit. The navigation between them is where most of my learning happened.",
     features: [
       "Complete CRUD(L) flows across multiple screens",
       "Navigation between list, detail, and edit views",
@@ -191,7 +191,7 @@ export const projects = [
       "A native Android habit tracker built in Kotlin with MVVM architecture and Room Database for offline-first persistence, plus notification-driven reminders and progress visualization.",
     image: "/images/projects/routines.svg",
     detail:
-      "A habit tracker I built for myself in native Android. Kotlin with MVVM, Room for offline-first persistence, and system notifications that nudge at set times. The progress view plots completion trends so a broken streak is obvious at a glance — it's the project where I got serious about architecture rather than just making screens work.",
+      "A habit tracker I built for myself in native Android. Kotlin with MVVM, Room for offline-first persistence, and system notifications that nudge at set times. The progress view plots completion trends so a broken streak is obvious at a glance. It's the project where I got serious about architecture rather than just making screens work.",
     features: [
       "MVVM architecture with a dedicated ViewModel layer",
       "Room database for offline-first local persistence",
@@ -208,7 +208,7 @@ export const projects = [
       "A GPS and proximity-driven React Native game where players claim hidden caches based on physical location and device orientation, backed by a RESTful API.",
     image: "/images/projects/geo-hunt.svg",
     detail:
-      "The mobile-development coursework project: a game where hidden caches are claimed by being physically near them, with the device's compass giving bearing and distance to guide you in. The UI re-renders as you move so the map feels live rather than polled. The backend was the graded piece — I pushed it to 90% unit-test coverage before submission.",
+      "The mobile-development coursework project: a game where hidden caches are claimed by being physically near them, with the device's compass giving bearing and distance to guide you in. The UI re-renders as you move so the map feels live rather than polled. The backend was the graded piece, and I pushed it to 90% unit-test coverage before submission.",
     features: [
       "Geolocation and compass APIs for real-time bearing and distance",
       "Responsive UI that updates dynamically as the player moves",
@@ -242,7 +242,7 @@ export const projects = [
       "A desktop CV builder written in Java with a Swing interface: form-driven editing that generates a clean, printable CV.",
     image: "/images/projects/cv-builder.svg",
     detail:
-      "An early desktop project in Java and Swing — form-driven editing of CV sections with a live preview and printable output. Built long before I had any web experience, and still the reason I understand why most people prefer not building UIs in Swing.",
+      "An early desktop project in Java and Swing: form-driven editing of CV sections with a live preview and printable output. Built long before I had any web experience, and still the reason I understand why most people prefer not building UIs in Swing.",
     features: [
       "Form-driven editing of CV sections",
       "Live preview before export",
@@ -381,7 +381,7 @@ export const localAI = {
 // Self-assessed working proficiency, not a byte share: weighted by how many
 // projects were built in each language and current fluency, not raw lines.
 // Java leads; C++/Go mid-band; Python eased down (fewer recent projects);
-// JS/CSS raised on project count; TypeScript low — known via JavaScript only.
+// JS/CSS raised on project count; TypeScript low, known via JavaScript only.
 export const languageStats = [
   { name: "Java", pct: 56 },
   { name: "JavaScript", pct: 48 },

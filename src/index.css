@@ -20,7 +20,7 @@
 }
 
 :root {
-  /* light theme (default) — Anthropic cream / orange */
+  /* light theme (default): Anthropic cream / orange */
   --bg: #f5f2ea;
   --bg-alt: #ece7da;
   --surface: #fbfaf6;
@@ -40,8 +40,8 @@
   --panel-muted: #a39b8a;
   /* contribution cells (light) */
   --pt-empty: #eae4d5;
-  --pt-l1: #ecd9c4;
-  --pt-l2: #dfb28f;
+  --pt-l1: #f0c69a;
+  --pt-l2: #e2a066;
   --pt-l3: #d97757;
   --pt-l4: #a84e31;
 
@@ -1211,6 +1211,52 @@ a {
   border-top: 1px solid color-mix(in srgb, var(--panel-ink) 12%, transparent);
   font-size: 13px;
   color: var(--panel-muted);
+}
+
+.footer-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.privacy-note {
+  position: relative;
+}
+
+.privacy-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  color: var(--panel-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.privacy-toggle:hover {
+  color: var(--panel-ink);
+}
+
+.privacy-panel {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  width: min(340px, 80vw);
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--panel-ink) 14%, transparent);
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  line-height: 1.55;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  z-index: 20;
+}
+
+.privacy-panel strong {
+  color: var(--ink);
 }
 
 /* ---------- custom cursor ---------- */

@@ -12,5 +12,5 @@ So either:
   1. name your file exactly "Bob-CV.pdf", or
   2. change profile.cvUrl in src/content.js to match your filename.
 
-No build config changes needed — Vite serves everything in public/ as-is,
+No build config changes needed. Vite serves everything in public/ as-is,
 in dev and in the production build (and inside a container later).

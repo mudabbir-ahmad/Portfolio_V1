@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 const WEEKS = 53; // trailing year, same span as GitHub's default graph
 const MAX_LEVEL = 4;
-const TOKEN = import.meta.env.VITE_GITHUB_TOKEN || "";
 
 function addDays(d, n) {
   const x = new Date(d);
@@ -40,89 +39,18 @@ function levelMap(counts) {
   return levels;
 }
 
-async function fetchContributions(fromIso, toIso) {
-  async function run(from) {
-    const res = await fetch("https://api.github.com/graphql", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${TOKEN}`,
-      },
-      body: JSON.stringify({
-        query: `{
-          viewer {
-            contributionsCollection(from: "${from}T00:00:00Z") {
-              totalCommitContributions
-              totalPullRequestContributions
-              totalIssueContributions
-              totalPullRequestReviewContributions
-              contributionCalendar {
-                weeks {
-                  contributionDays {
-                    date
-                    contributionCount
-                  }
-                }
-              }
-            }
-          }
-        }`,
-      }),
-    });
-    const json = await res.json();
-    if (!res.ok || json.errors) {
-      throw new Error(json.errors?.[0]?.message || `GraphQL ${res.status}`);
-    }
-    return json.data.viewer.contributionsCollection;
+// Fetched from our own server (server/index.js), which holds the GitHub
+// token and calls the GitHub API itself, so the token never reaches the browser.
+async function fetchContributions() {
+  const res = await fetch("/api/contributions");
+  if (res.status === 501) {
+    const err = new Error("not_configured");
+    err.code = "not_configured";
+    throw err;
   }
-
-  // GitHub caps contributionCalendar at 366 days from `from`, but the 53-week
-  // grid spans up to 371 days (Tue-Sat). Fetch the truncated tail separately.
-  const counts = new Map();
-  let maxDay = null;
-  function absorb(cc) {
-    for (const week of cc.contributionCalendar.weeks) {
-      for (const day of week.contributionDays) {
-        if (!maxDay || day.date > maxDay) maxDay = day.date;
-        if (day.contributionCount > 0) counts.set(day.date, day.contributionCount);
-      }
-    }
-  }
-
-  let cc = await run(fromIso);
-  absorb(cc);
-  let commits = cc.totalCommitContributions;
-  let prs = cc.totalPullRequestContributions;
-  let issues = cc.totalIssueContributions;
-  let reviews = cc.totalPullRequestReviewContributions;
-
-  if (maxDay < toIso) {
-    const [y, m, d] = maxDay.split("-").map(Number);
-    const tailFrom = dayKey(addDays(new Date(y, m - 1, d), 1));
-    const tail = await run(tailFrom);
-    absorb(tail);
-    commits += tail.totalCommitContributions;
-    prs += tail.totalPullRequestContributions;
-    issues += tail.totalIssueContributions;
-    reviews += tail.totalPullRequestReviewContributions;
-  }
-
-  let last = null;
-  for (const day of counts.keys()) if (!last || day > last) last = day;
-
-  // Calendar sum matches GitHub's profile number (includes private contributions).
-  let calendarSum = 0;
-  for (const n of counts.values()) calendarSum += n;
-
-  return {
-    counts,
-    total: calendarSum,
-    commits,
-    prs,
-    issues,
-    reviews,
-    last,
-  };
+  if (!res.ok) throw new Error(`proxy ${res.status}`);
+  const json = await res.json();
+  return { ...json, counts: new Map(Object.entries(json.counts)) };
 }
 
 export default function PushTracker() {
@@ -130,22 +58,16 @@ export default function PushTracker() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    if (!TOKEN) {
-      setStatus("note");
-      return;
-    }
     let cancelled = false;
     (async () => {
       try {
-        const today = new Date();
-        const thisSunday = addDays(today, -today.getDay());
-        const gridStart = addDays(thisSunday, -(WEEKS - 1) * 7);
-        const result = await fetchContributions(dayKey(gridStart), dayKey(today));
+        const result = await fetchContributions();
         if (cancelled) return;
         setData(result);
         setStatus("ready");
-      } catch {
-        if (!cancelled) setStatus("error");
+      } catch (e) {
+        if (cancelled) return;
+        setStatus(e.code === "not_configured" ? "note" : "error");
       }
     })();
     return () => {
