@@ -14,6 +14,9 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+import fs from "node:fs";
+import http from "node:http";
+import https from "node:https";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import dotenv from "dotenv";
@@ -24,6 +27,13 @@ dotenv.config({ path: path.resolve(__dirname, "../secrets/.env") });
 const TOKEN = process.env.GITHUB_TOKEN || "";
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "http://localhost:5173";
 const PORT = Number(process.env.PORT) || 3001;
+// Encryption in transit. Either terminate TLS here (TLS_CERT + TLS_KEY paths to
+// PEM files) or sit behind a TLS proxy and set FORCE_HTTPS=true so plain-HTTP
+// requests are redirected. Either way the GitHub token stays server-side and
+// the upstream call to api.github.com is always HTTPS.
+const TLS_CERT = process.env.TLS_CERT || "";
+const TLS_KEY = process.env.TLS_KEY || "";
+const FORCE_HTTPS = process.env.FORCE_HTTPS === "true";
 const WEEKS = 53;
 const CACHE_TTL_MS = 10 * 60 * 1000; // one shared cache entry; this is a single-user site
 
@@ -125,8 +135,14 @@ async function fetchContributions() {
 
 const app = express();
 app.set("trust proxy", 1); // behind Nginx Proxy Manager, needed for correct rate-limit IPs
+if (FORCE_HTTPS) {
+  app.use((req, res, next) =>
+    req.secure ? next() : res.redirect(308, `https://${req.headers.host}${req.originalUrl}`)
+  );
+}
 app.use(
   helmet({
+    hsts: { maxAge: 63072000, includeSubDomains: true, preload: true },
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
@@ -165,7 +181,12 @@ const distPath = path.resolve(__dirname, "../dist");
 app.use(express.static(distPath));
 app.get(/^(?!\/api).*/, (req, res) => res.sendFile(path.join(distPath, "index.html")));
 
-app.listen(PORT, () => {
-  console.log(`portfolio server listening on :${PORT}`);
+const server =
+  TLS_CERT && TLS_KEY
+    ? https.createServer({ cert: fs.readFileSync(TLS_CERT), key: fs.readFileSync(TLS_KEY) }, app)
+    : http.createServer(app);
+
+server.listen(PORT, () => {
+  console.log(`portfolio server listening on :${PORT} (${TLS_CERT && TLS_KEY ? "HTTPS" : "HTTP"})`);
   if (!TOKEN) console.warn("GITHUB_TOKEN not set, /api/contributions will return 501");
 });

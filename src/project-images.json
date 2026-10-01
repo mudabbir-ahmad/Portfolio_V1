@@ -1,0 +1,11 @@
+{
+  "_help": "Drop image files into public/images/projects/ then list their filenames under the project id. One image = static picture; several = a swipeable carousel. Projects not listed (or with an empty list) fall back to their default artwork.",
+  "mass": [],
+  "radar": [],
+  "qr-hunt": [],
+  "crudl": [],
+  "routines": [],
+  "geo-hunt": [],
+  "ai-bot": [],
+  "cv-builder": []
+}

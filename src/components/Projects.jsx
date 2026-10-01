@@ -1,6 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { projects } from "../content.js";
+import ImageCarousel from "./ImageCarousel.jsx";
+import projectImages from "../project-images.json";
+
+// Images listed in src/project-images.json (files live in public/images/projects/);
+// falls back to the project's default artwork.
+function imagesFor(p) {
+  const list = (projectImages[p.id] || []).map((f) => `/images/projects/${f}`);
+  return list.length ? list : [p.image];
+}
 
 function Tag({ children, variant }) {
   return <span className={`tag${variant ? ` tag--${variant}` : ""}`}>{children}</span>;
@@ -124,7 +133,7 @@ export default function Projects() {
               <button className="pm-close" ref={closeRef} onClick={close}>
                 Close ×
               </button>
-              <img className="pm-image" src={selected.image} alt="" />
+              <ImageCarousel key={selected.id} images={imagesFor(selected)} />
               <div className="pm-body">
                 <div className="pm-head">
                   <h3 id="pm-title">{selected.title}</h3>

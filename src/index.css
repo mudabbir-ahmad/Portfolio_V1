@@ -1407,3 +1407,60 @@ html.has-custom-cursor * {
     animation: none;
   }
 }
+
+/* Project image carousel */
+.pm-carousel {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--hairline);
+}
+.pm-carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pm-carousel-track .pm-image {
+  flex: 0 0 100%;
+  border-bottom: 0;
+}
+.pm-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.pm-arrow--prev { left: 12px; }
+.pm-arrow--next { right: 12px; }
+.pm-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.pm-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--surface);
+  background: rgba(19, 17, 24, 0.45);
+  cursor: pointer;
+}
+.pm-dot--on { background: var(--accent); }
+.pm-arrow:focus-visible, .pm-dot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pm-carousel-track { transition: none; }
+}

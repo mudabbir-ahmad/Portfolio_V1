@@ -35,7 +35,7 @@ export const profile = {
 
   about: [
     "I'm a recent graduate software engineer based in London. I studied Computer Science at first-class level, and spent my degree building real systems: a media aggregation & sorting system for my final-year project, mobile apps with React Native, and coursework that pushed me to think like an engineer, not just a coder.",
-    "Outside of work I run a home lab: a Proxmox host carrying a stack of self-hosted services, three cloud VPS instances, and a growing interest in running local AI models on my own hardware. If it can be self-hosted, I've probably tried to.",
+    "Outside of my studies, I run a home lab: a Proxmox host carrying a stack of self-hosted services, three cloud VPS instances, and a growing interest in running local AI models on my own hardware. If it can be self-hosted, I've probably tried to.",
   ],
 };
 
@@ -115,6 +115,7 @@ export const interests = [
 // the long-form write-up for the expanded view; `image` is its art.
 export const projects = [
   {
+    id: "mass",
     title: "MASS: Media Aggregation & Sorting System",
     year: "2026",
     role: "Final-year project · Solo",
@@ -134,6 +135,7 @@ export const projects = [
     highlight: true,
   },
   {
+    id: "radar",
     title: "Hardware Tinkering: 240 GHz Doppler Radar",
     role: "Hardware project · ESP32",
     description:
@@ -150,6 +152,7 @@ export const projects = [
     stack: ["ESP32", "Arduino"],
   },
   {
+    id: "qr-hunt",
     title: "QR Code Treasure Hunt",
     year: "2024",
     role: "Group project · Year 2 final coursework",
@@ -167,6 +170,7 @@ export const projects = [
     repo: `https://github.com/${GITHUB_USER}/Treasure-Hunt-App`,
   },
   {
+    id: "crudl",
     title: "CRUDL: React Native Demo",
     year: "2024",
     role: "University project",
@@ -184,6 +188,7 @@ export const projects = [
     repo: `https://github.com/${GITHUB_USER}/Project-MAD-crudler`,
   },
   {
+    id: "routines",
     title: "Routines App",
     year: "2024",
     role: "Personal project · Android",
@@ -201,6 +206,7 @@ export const projects = [
     repo: `https://github.com/${GITHUB_USER}/Kotlin-TB2P1`,
   },
   {
+    id: "geo-hunt",
     title: "Location-Based Treasure Hunt App",
     year: "2024",
     role: "University project · Mobile Development",
@@ -218,6 +224,7 @@ export const projects = [
     repo: `https://github.com/${GITHUB_USER}/MAD-Treasure-Hunt`,
   },
   {
+    id: "ai-bot",
     title: "AI Discord Bot",
     year: "2025",
     role: "Personal project · Self-hosted",
@@ -235,6 +242,7 @@ export const projects = [
     tags: ["Private-Repo"],
   },
   {
+    id: "cv-builder",
     title: "CV Builder",
     year: "2024/2025",
     role: "Personal project · Desktop",
@@ -354,7 +362,7 @@ export const skills = {
 
 export const homelab = [
   { name: "Proxmox", detail: "Single-node hypervisor running the whole stack" },
-  { name: "Jellyfin + own media server", detail: "Self-hosted streaming (media server WIP)" },
+  { name: "Own Media Server", detail: "Self-hosted streaming (WIP)" },
   { name: "SearXNG", detail: "Private metasearch engine" },
   { name: "Dockhand", detail: "Container management UI" },
   { name: "Nginx", detail: "Reverse proxy for the house network" },
@@ -373,20 +381,20 @@ export const homelab = [
 export const localAI = {
   heading: "Local AI, on my own hardware",
   body: [
-    "I run self-hosted language models on hardware I own, currently a custom flavour of Qwen 3.8 27B served through LM Studio and OpenWebUI, as a way to learn how LLMs actually work under the hood: inference, context, and serving.",
-    "It's not just theory: my Discord bot pairs a Cloud Gemma 4 31B-IT model for text chat and voice with a local Gemma 4 E4B QAT fallback.",
+    "I run my own self-hosted language models on my own hardware. Currently running a custom flavour of a quantised Qwen 3.8 27B Model served through BeeLLama over to my OpenWebUI instance running on my HomeLab, as a way to learn on how to deploy and utilise LLMs in the modern day world and also help me study how they work in a more fundamental sense, when it comes down to their inference, context management and serving it.",
+    "It's not just Local Models I utilise, I make use of a mix of both Local and Cloud hosted models in my own applications such as an AI Model Powered Discord Chat Bot, a discord bot capable of interacting with users both in Text format and also in Voice Calls, with the goal of acting like a regular human user. This pushes me towards building and writing code that works with both small and larger models which would react to certain prompts differently.",
   ],
 };
 
 // Self-assessed working proficiency, not a byte share: weighted by how many
 // projects were built in each language and current fluency, not raw lines.
-// Java leads; C++/Go mid-band; Python eased down (fewer recent projects);
+// Java leads; C++ ahead of Python; Go mid-band;
 // JS/CSS raised on project count; TypeScript low, known via JavaScript only.
 export const languageStats = [
   { name: "Java", pct: 56 },
   { name: "JavaScript", pct: 48 },
-  { name: "Python", pct: 28 },
-  { name: "C++", pct: 22 },
+  { name: "C++", pct: 28 },
+  { name: "Python", pct: 22 },
   { name: "Go", pct: 18 },
   { name: "CSS", pct: 16 },
   { name: "TypeScript", pct: 14 },
