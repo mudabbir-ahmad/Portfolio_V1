@@ -25,6 +25,7 @@ services:
       VITE_CV_URL: "${VITE_CV_URL:-/CV/my_cv.pdf}"          # e.g. /CV/your-cv.pdf; empty hides CV buttons
       GITHUB_TOKEN: "${GITHUB_TOKEN:-}"        # read-only PAT, set in the gitignored root .env; empty disables the contribution graph
       ALLOWED_ORIGIN: "${ALLOWED_ORIGIN:-http://localhost:3001}"
+      SITE_URL: "${SITE_URL:-http://localhost:3001}"        # public address, used in link-preview tags
       FORCE_HTTPS: "${FORCE_HTTPS:-false}"
     # Only if you set VITE_CV_URL: the CV is never baked into the image.
     volumes:

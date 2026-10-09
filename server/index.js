@@ -199,7 +199,9 @@ let indexHtml = "";
 try {
   indexHtml = fs
     .readFileSync(path.join(distPath, "index.html"), "utf8")
-    .replaceAll("__SITE_NAME__", escapeHtml(publicEnv.VITE_NAME || "Your Name"));
+    .replaceAll("__SITE_NAME__", escapeHtml(publicEnv.VITE_NAME || "Your Name"))
+    // Absolute URLs for link previews (og:image needs one). Set SITE_URL to the public address.
+    .replaceAll("__SITE_URL__", escapeHtml((process.env.SITE_URL || ALLOWED_ORIGIN).replace(/\/$/, "")));
 } catch {
   console.warn("dist/index.html not found, run `npm run build` first");
 }
