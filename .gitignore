@@ -19,3 +19,12 @@ public/CV/*
 .claude/
 .gh-*.json
 scripts/diff-tracker.mjs
+
+# Real values for the container (compose merges the override file in)
+docker-compose.override.yml
+/.env
+
+# Screenshot capture: cloned source for git-based projects, and raw hand-taken shots
+# (the processed images in public/images/projects/ are kept)
+.capture-work/
+scripts/capture/manual/*/

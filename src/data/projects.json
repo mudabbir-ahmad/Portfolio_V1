@@ -1,0 +1,290 @@
+[
+  {
+    "id": "mass",
+    "title": "MASS: Media Aggregation & Sorting System",
+    "year": "2026",
+    "role": "Final-year project · Solo",
+    "description": "A cross-platform React Native app that aggregates media from device storage, Google Photos, and a home NAS into one timeline view, backed by a RESTful Express.js backend.",
+    "image": "/images/projects/mass.svg",
+    "detail": "Built as my final-year project, MASS pulls media from three sources: device storage, Google Photos, and a Synology NAS on the home network, and merges them into one chronological timeline. The Express backend sits between the app and each source, normalising metadata so sorting by date, type, or location stays consistent regardless of where the file lives. Most of my engineering time went into the caching layer: repeated timeline fetches hit the cache instead of re-querying all three sources, which is where the 30% latency reduction came from.",
+    "features": [
+      "Cut data retrieval latency by around 30% through API response caching",
+      "Metadata-driven sorting across video, audio and image sources",
+      "RESTful Express.js backend for concurrent requests, cutting average response time by roughly 15%",
+      "CI/CD pipeline that automated testing and deployment, cutting manual testing and integration time by about 20%"
+    ],
+    "stack": [
+      "React Native",
+      "Expo",
+      "Node.js",
+      "Express.js"
+    ],
+    "repo": "Abstracted-MASS-PublicVer",
+    "images": [
+      "mass-1.webp",
+      "mass-2.webp",
+      "mass-3.webp",
+      "mass-4.webp",
+      "mass-5.webp",
+      "mass-6.webp",
+      "mass-7.webp"
+    ],
+    "period": "Sep 2025 - Apr 2026",
+    "orientation": "portrait",
+    "fyp": true
+  },
+  {
+    "id": "portfolio",
+    "title": "Portfolio Website",
+    "year": "2026",
+    "role": "Personal project · Web",
+    "description": "A React and Tailwind CSS portfolio driven by JSON content files, with a live GitHub activity tracker and a containerised deployment.",
+    "image": "/images/projects/homelab.svg",
+    "detail": "The site you're on now. Content lives in JSON data files, so the words can change without touching components. An Express endpoint queries the GitHub GraphQL API for the live activity tracker, caches results for 10 minutes, and keeps the access token server-side. The app is containerised with a multi-stage Docker build that runs as a non-root user and takes its configuration at run time, so no secrets are baked into the image.",
+    "features": [
+      "React and Tailwind CSS front end, with project detail modals, an image carousel and scroll animations",
+      "Light and dark theming",
+      "Express endpoint for the GitHub GraphQL API with 10-minute caching and the token kept server-side",
+      "Multi-stage Docker build running as a non-root user, with no secrets baked into the image"
+    ],
+    "stack": [
+      "React",
+      "Tailwind CSS",
+      "Node.js",
+      "Express.js",
+      "Docker"
+    ],
+    "repo": "Portfolio_V1",
+    "images": [
+      "portfolio-home.png",
+      "portfolio-projects.png",
+      "portfolio-detail.png",
+      "portfolio-homelab.png"
+    ],
+    "period": "2026",
+    "orientation": "landscape"
+  },
+  {
+    "id": "radar",
+    "title": "240 GHz Doppler Radar",
+    "year": "2026",
+    "role": "Hardware project · ESP32",
+    "description": "A 240 GHz Doppler radar where an ESP32 processes raw sensor data in real time to track three moving targets, with results served live over Wi-Fi.",
+    "image": "/images/projects/radar.svg",
+    "detail": "A hardware build around a 240 GHz Doppler radar module and an ESP32. The board samples the RF signal, extracts velocity from the Doppler shift, and keeps track of up to three targets at once. Results stream over Wi-Fi to a small web dashboard I wrote so I could watch the tracking live. Half project, half excuse to get comfortable with raw sensor data.",
+    "features": [
+      "240 GHz RF sensing exploiting the Doppler shift for motion tracking",
+      "Tracks three moving targets simultaneously",
+      "ESP32 board processes the raw sensor signal in real time",
+      "Live results served over Wi-Fi to a web dashboard"
+    ],
+    "stack": [
+      "ESP32",
+      "Arduino"
+    ],
+    "images": [
+      "radar-1.webp"
+    ],
+    "period": "2026",
+    "orientation": "landscape"
+  },
+  {
+    "id": "geo-hunt",
+    "title": "Location-Based Treasure Hunt App",
+    "year": "2026",
+    "role": "University project · Mobile Development",
+    "description": "A GPS and proximity-driven React Native game where players claim hidden caches by physical location, backed by a REST API with robust session state management.",
+    "image": "/images/projects/geo-hunt.svg",
+    "detail": "The mobile-development coursework project: a game where hidden caches are claimed by being physically near them, with the device's compass giving bearing and distance to guide you in. The UI re-renders as you move so the map feels live rather than polled. The backend was the graded piece, and I pushed it to 90% unit-test coverage before submission.",
+    "features": [
+      "Geolocation and compass APIs for live bearing and distance to each cache",
+      "Responsive UI that updates as the player moves",
+      "REST API backend with robust session state management",
+      "90% automated unit-test coverage"
+    ],
+    "stack": [
+      "React Native",
+      "GPS",
+      "Sensor APIs"
+    ],
+    "repo": "MAD-Treasure-Hunt",
+    "images": [
+      "geo-hunt-1.webp",
+      "geo-hunt-2.webp",
+      "geo-hunt-3.webp",
+      "geo-hunt-4.webp",
+      "geo-hunt-5.webp",
+      "geo-hunt-6.webp",
+      "geo-hunt-7.webp"
+    ],
+    "period": "Jan 2026 - Apr 2026",
+    "orientation": "portrait"
+  },
+  {
+    "id": "routines",
+    "title": "Routines App",
+    "year": "2026",
+    "role": "Personal project · Android",
+    "description": "A native Android habit tracker built in Kotlin with MVVM architecture and Room Database for offline-first persistence, plus notification-driven reminders.",
+    "image": "/images/projects/routines.svg",
+    "detail": "A habit tracker I built for myself in native Android. Kotlin with MVVM, Room for offline-first persistence, and system notifications that nudge at set times. The progress view plots completion trends so a broken streak is obvious at a glance. It's the project where I got serious about architecture rather than just making screens work.",
+    "features": [
+      "MVVM architecture with a dedicated ViewModel layer",
+      "Room database for offline-first local persistence",
+      "Notification-driven reminders and habit completion trends"
+    ],
+    "stack": [
+      "Kotlin",
+      "Android Studio",
+      "MVVM",
+      "Room"
+    ],
+    "repo": "Kotlin-TB2P1",
+    "images": [
+      "routines-1.webp",
+      "routines-2.webp",
+      "routines-3.webp",
+      "routines-4.webp",
+      "routines-5.webp",
+      "routines-6.webp"
+    ],
+    "period": "Jan 2026 - Apr 2026",
+    "orientation": "portrait"
+  },
+  {
+    "id": "homelab",
+    "title": "Self-Hosted Homelab",
+    "period": "Ongoing",
+    "role": "Personal project · Proxmox",
+    "description": "A Proxmox homelab running about 15 self-hosted services behind an Nginx reverse proxy, with Tailscale, WireGuard and OpenVPN for secure remote access.",
+    "image": "/images/projects/homelab.svg",
+    "detail": "Everything runs on a Proxmox host behind an Nginx reverse proxy. Services include Gitea, Vaultwarden, Immich, Home Assistant and Pi-hole, about 15 in total. Remote access goes through Tailscale, WireGuard and OpenVPN. The same setup hosts a Python Discord bot that uses a cloud LLM with a local-model fallback. The full service list is in the Homelab section below.",
+    "features": [
+      "15+ self-hosted services on a Proxmox host",
+      "Nginx reverse proxy for the house network",
+      "Tailscale, WireGuard and OpenVPN for secure remote access",
+      "Hosts a Python Discord bot with a cloud LLM and local-model fallback"
+    ],
+    "stack": [
+      "Proxmox",
+      "Docker",
+      "Linux",
+      "Nginx",
+      "Tailscale"
+    ],
+    "images": [
+      "homelab-1.webp"
+    ],
+    "orientation": "landscape"
+  },
+  {
+    "id": "qr-hunt",
+    "title": "QR Code Treasure Hunt",
+    "year": "2025",
+    "role": "Group project · Year 2 final coursework",
+    "description": "A web-based scavenger hunt where participants scan physical QR codes to claim items and accumulate points, with a real-time leaderboard for competitive gameplay.",
+    "image": "/images/projects/qr-hunt.svg",
+    "detail": "A scavenger hunt for real spaces: each item is hidden behind a physical QR code that participants scan with their phone to claim points. The server validates every scan so codes can't be replayed from the leaderboard page, and the board updates in real time as teams race around the venue. We shipped it as a group within a fixed coursework window, which mostly taught me how to split work cleanly across people.",
+    "features": [
+      "QR code generation with server-side scan validation",
+      "Real-time leaderboard driving competitive play",
+      "Shipped as a team within a fixed coursework window"
+    ],
+    "stack": [
+      "React.js",
+      "JavaScript"
+    ],
+    "repo": "Treasure-Hunt-App",
+    "images": [
+      "qr-hunt-1.webp",
+      "qr-hunt-2.webp",
+      "qr-hunt-3.webp",
+      "qr-hunt-4.webp",
+      "qr-hunt-5.webp"
+    ],
+    "period": "Jan 2025 - Apr 2025",
+    "orientation": "landscape"
+  },
+  {
+    "id": "ai-bot",
+    "title": "AI Discord Bot",
+    "year": "2025",
+    "role": "Personal project · Self-hosted",
+    "description": "A Python Discord bot with text chat and voice, using a cloud LLM with a local-model fallback, running continuously on my homelab.",
+    "image": "/images/projects/ai-bot.svg",
+    "detail": "A self-hosted Discord bot that answers in text channels and joins voice channels, powered by a cloud-hosted model with a local quantised model as fallback when the cloud is down or slow. It runs on my home hardware around the clock, which doubles as a testbed for prompting behaviour before I wire anything similar into other projects.",
+    "features": [
+      "Text and voice channels backed by an LLM",
+      "Cloud model primary, with a local quantised model as fallback",
+      "Runs continuously on home hardware via the Discord API"
+    ],
+    "stack": [
+      "Python",
+      "LLM",
+      "Voice",
+      "Discord API"
+    ],
+    "tags": [
+      "Private repo"
+    ],
+    "images": [
+      "ai-bot-1.webp"
+    ],
+    "period": "2025",
+    "orientation": "landscape"
+  },
+  {
+    "id": "crudl",
+    "title": "CRUDL: React Native Demo",
+    "year": "2025",
+    "role": "University project",
+    "description": "A full CRUD(L) application built to learn React Native properly: create, read, update, delete, and list flows across screens.",
+    "image": "/images/projects/crudl.svg",
+    "detail": "A deliberately small React Native app that exists because I wanted to actually understand the framework before building anything big on it. It walks through the full create-read-update-delete-list cycle with separate screens for list, detail, and edit. The navigation between them is where most of my learning happened.",
+    "features": [
+      "Complete CRUD(L) flows across multiple screens",
+      "Navigation between list, detail, and edit views",
+      "First serious pass at mobile state management"
+    ],
+    "stack": [
+      "React Native",
+      "JavaScript"
+    ],
+    "repo": "Project-MAD-crudler",
+    "images": [
+      "crudl-1.webp",
+      "crudl-2.webp",
+      "crudl-3.webp",
+      "crudl-4.webp",
+      "crudl-5.webp"
+    ],
+    "period": "2025",
+    "orientation": "portrait"
+  },
+  {
+    "id": "cv-builder",
+    "title": "CV Builder",
+    "year": "2024/2025",
+    "role": "Personal project · Desktop",
+    "description": "A desktop CV builder written in Java with a Swing interface: form-driven editing that generates a clean, printable CV.",
+    "image": "/images/projects/cv-builder.svg",
+    "detail": "An early desktop project in Java and Swing: form-driven editing of CV sections with a live preview and printable output. Built long before I had any web experience, and still the reason I understand why most people prefer not building UIs in Swing.",
+    "features": [
+      "Form-driven editing of CV sections",
+      "Live preview before export",
+      "Clean, printable output from the desktop app"
+    ],
+    "stack": [
+      "Java",
+      "Swing"
+    ],
+    "tags": [
+      "GitLab"
+    ],
+    "images": [
+      "cv-builder-1.webp"
+    ],
+    "period": "2024 - 2025",
+    "orientation": "landscape"
+  }
+]

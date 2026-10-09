@@ -1,20 +1,31 @@
 # Deploying
 
+## Where the settings live
+| Run mode | Name, email, links, GitHub token come from |
+|---|---|
+| Without Docker (`npm run dev`, `npm start`) | `secrets/.env` (copy `.env.example`) |
+| Docker | the `environment:` block in `docker-compose.yml` only |
+
+Everything else (About text, experience, projects, skills...) is in `src/data/*.json`.
+
 ## Adding project images
 1. Copy the files into `public/images/projects/`.
-2. Add the filenames under the project's id in `src/project-images.json`.
+2. Add the filenames to that project's `images` list in `src/data/projects.json`.
    Several filenames = carousel.
 
-## First-time server setup
-1. `git clone` the repo, then create `secrets/.env` from `.env.example`
-   (set `VITE_*` values, `GITHUB_TOKEN` (read-only PAT), `ALLOWED_ORIGIN`, and
-   either `TLS_CERT`/`TLS_KEY` or `FORCE_HTTPS=true` behind a TLS proxy).
-2. Put your CV at `public/CV/` (gitignored, so copy it over manually).
-3. `npm run deploy` — installs, builds, and starts the server (default port 3001).
+## Docker
+```
+docker compose up -d --build     # or: npm run docker
+```
+The container is non-root, read-only, capability-less and resource-capped, and bound
+to 127.0.0.1 (put a TLS proxy in front, or set `TLS_CERT`/`TLS_KEY` / `FORCE_HTTPS`).
+Values are passed at run time, so the same image works for any identity. Keep the
+committed compose file generic and put real values in a gitignored
+`docker-compose.override.yml`, or edit the environment block directly.
+To ship a CV, set `VITE_CV_URL` and uncomment the `volumes:` line (the CV is never baked in).
 
-## Updating
+## Without Docker
 ```
-git pull && npm run setup && npm run build
+npm run deploy     # install, build, start on :3001
 ```
-then restart the process (systemd/pm2). The token lives only in `secrets/.env`
-and is only ever used by `server/index.js`; the browser never sees it.
+Update with `git pull && npm run setup && npm run build`, then restart the process.

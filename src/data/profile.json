@@ -1,0 +1,67 @@
+{
+  "headline": "Graduate Software Engineer",
+  "role": "Graduate software engineer",
+  "location": "London, UK",
+  "heroTagline": "I build software end to end, from React and mobile front ends to the Express APIs, networks and self-hosted infrastructure that run them.",
+  "availability": "Open to graduate software engineering roles",
+  "glance": [
+    {
+      "label": "Degree",
+      "value": "BSc Computer Science, First Class (1:1)"
+    },
+    {
+      "label": "Based in",
+      "value": "London, UK"
+    },
+    {
+      "label": "Day to day",
+      "value": "React, React Native, Node.js"
+    },
+    {
+      "label": "Also into",
+      "value": "Linux, networks, self-hosting"
+    }
+  ],
+  "education": {
+    "degree": "BSc (Hons) Computer Science",
+    "classification": "First Class Honours",
+    "institution": "{{university}}",
+    "period": "Sep 2023 - Jun 2026",
+    "awarded": "Awarded July 2026",
+    "accreditation": "BCS accredited",
+    "modules": [
+      {
+        "name": "Programming I",
+        "mark": 98
+      },
+      {
+        "name": "Mobile Application Development",
+        "mark": 90
+      },
+      {
+        "name": "Programming II: Software Development",
+        "mark": 80
+      },
+      {
+        "name": "Computing Systems",
+        "mark": 79
+      },
+      {
+        "name": "Individual Project",
+        "mark": 73
+      }
+    ],
+    "alsoStudied": [
+      "Requirements Analysis and Design",
+      "Programming III: Patterns and Algorithms",
+      "Database-Driven Application Development"
+    ],
+    "note": "I also wrote the technical design specifications for my final-year projects, turning open-ended requirements into plans I could actually build from.",
+    "grade": "1:1"
+  },
+  "about": [
+    "I'm a software engineer based in London. I graduated from {{university}} in July 2026 with a First in Computer Science, and I'm now looking for my first full-time engineering role.",
+    "What I enjoy most is owning a problem from the first sketch to the thing actually running somewhere. For my final-year project that was MASS, a React Native app that pulls photos and video from a phone, Google Photos and a home NAS into one timeline, along with the Express API and CI/CD pipeline behind it. I've also built a GPS treasure hunt game, a native Android habit tracker in Kotlin and a 240 GHz Doppler radar on an ESP32.",
+    "Infrastructure is the other half of it. Since 2020 I've spent my summers volunteering as a network engineer at a large multi-site event, helping keep 2,000+ people online at 99.9% uptime. At home that turned into a Proxmox homelab running around 15 self-hosted services. If something can be self-hosted, I've probably tried it."
+  ]
+}

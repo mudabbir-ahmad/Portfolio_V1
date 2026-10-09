@@ -1,5 +1,7 @@
 import { profile, githubRepos } from "../content.js";
 import { skillIcons } from "./skill-icons.js";
+import { Stagger, StaggerItem } from "./Stagger.jsx";
+import { Icon } from "./icons.jsx";
 
 const langColors = {
   JavaScript: "#f1e05a",
@@ -40,20 +42,19 @@ export default function GitHubGrid() {
   return (
     <section className="github section" id="github">
       <div className="container">
+        <p className="eyebrow">Code</p>
         <h2 className="section-title">On GitHub</h2>
         <p className="section-lede">
-          A curated selection from my 38 repositories: 27 self-made and 11
-          fully agentic projects built with AI agents, to develop a feel for
-          system design and AI-assisted software development. The full list
-          lives on{" "}
+          A few repositories worth opening first. The full list lives on{" "}
           <a href={profile.github} target="_blank" rel="noreferrer">
             github.com/{profile.githubUser}
           </a>
           .
         </p>
-        <div className="repo-grid">
+        <Stagger className="repo-grid" gap={0.07}>
           {githubRepos.map((r) => (
-            <a
+            <StaggerItem
+              as="a"
               key={r.name}
               className="repo-card"
               href={r.url}
@@ -67,13 +68,11 @@ export default function GitHubGrid() {
                   <LangMark language={r.language} />
                   {r.language}
                 </span>
-                <span className="repo-stars">
-                  {r.stars > 0 ? `${r.stars} star${r.stars === 1 ? "" : "s"}` : null}
-                </span>
+                <Icon name="external" className="link-icon" />
               </div>
-            </a>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

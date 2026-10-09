@@ -178,8 +178,36 @@ app.get(
 );
 
 const distPath = path.resolve(__dirname, "../dist");
-app.use(express.static(distPath));
-app.get(/^(?!\/api).*/, (req, res) => res.sendFile(path.join(distPath, "index.html")));
+
+// Runtime site config. `docker run -e VITE_NAME=...` (or secrets/.env when run
+// directly) fills these in at start-up, so one built image serves any identity.
+// Only these identity/contact keys are exposed; the GitHub token never is.
+const PUBLIC_KEYS = ["VITE_NAME", "VITE_EMAIL", "VITE_GITHUB_USER", "VITE_LINKEDIN", "VITE_CV_URL", "VITE_UNIVERSITY"];
+const publicEnv = Object.fromEntries(
+  PUBLIC_KEYS.filter((k) => process.env[k]).map((k) => [k, process.env[k]])
+);
+const escapeHtml = (s) =>
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+app.get("/env.js", (req, res) => {
+  res.set("Cache-Control", "no-store").type("application/javascript");
+  res.send(`window.__ENV__=${JSON.stringify(publicEnv)};`);
+});
+
+// index.html with the site name filled into the <title>/meta tags.
+let indexHtml = "";
+try {
+  indexHtml = fs
+    .readFileSync(path.join(distPath, "index.html"), "utf8")
+    .replaceAll("__SITE_NAME__", escapeHtml(publicEnv.VITE_NAME || "Your Name"));
+} catch {
+  console.warn("dist/index.html not found, run `npm run build` first");
+}
+const sendIndex = (req, res) => res.type("html").send(indexHtml);
+
+app.get("/", sendIndex);
+app.use(express.static(distPath, { index: false }));
+app.get(/^(?!\/api).*/, sendIndex);
 
 const server =
   TLS_CERT && TLS_KEY

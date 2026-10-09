@@ -1,402 +1,74 @@
 // ---------------------------------------------------------------------------
-// Single source of truth for all personal content.
-// Swap the name, links, or any section by editing this file only.
+// Content assembly. The words themselves live in src/data/*.json, one file per
+// section (profile, stats, experience, projects, repos, skills, homelab,
+// languages, interests). Edit those to change what the site says.
+//
+// Only identity and contact details come from env (secrets/.env in dev,
+// `docker run -e` in a container), so a demo can swap them without touching
+// any content:
+//   VITE_NAME, VITE_EMAIL, VITE_GITHUB_USER, VITE_LINKEDIN,
+//   VITE_CV_URL, VITE_UNIVERSITY (fills {{university}} in the JSON files).  Empty email / LinkedIn / CV hides that button.
 // ---------------------------------------------------------------------------
 
-// Personal details live in secrets/.env (VITE_* vars) so the repo itself
-// never carries private data. The fallbacks below keep a fresh clone buildable.
-const NAME = import.meta.env.VITE_NAME || "Bob";
-const LOCATION = import.meta.env.VITE_LOCATION || "London, UK";
-const EMAIL = import.meta.env.VITE_EMAIL || "";
-const GITHUB_USER = import.meta.env.VITE_GITHUB_USER || "your-github-username";
-const LINKEDIN = import.meta.env.VITE_LINKEDIN || "";
-const CV_URL = import.meta.env.VITE_CV_URL || "/CV/my_cv.pdf";
+import profileData from "./data/profile.json";
+import statsData from "./data/stats.json";
+import experienceData from "./data/experience.json";
+import interestsData from "./data/interests.json";
+import projectsData from "./data/projects.json";
+import reposData from "./data/repos.json";
+import skillsData from "./data/skills.json";
+import homelabData from "./data/homelab.json";
+import languagesData from "./data/languages.json";
+
+// Runtime values (served by server/index.js at /env.js, filled from `docker run -e`)
+// win over build-time ones (secrets/.env, used by `npm run dev`).
+const env = { ...import.meta.env, ...(typeof window !== "undefined" ? window.__ENV__ : {}) };
+const GITHUB_USER = env.VITE_GITHUB_USER || "your-github-username";
+// Replaces {{university}} anywhere in a JSON section with VITE_UNIVERSITY.
+const UNIVERSITY = env.VITE_UNIVERSITY || "Your University";
+const fill = (v) =>
+  typeof v === "string"
+    ? v.replaceAll("{{university}}", UNIVERSITY)
+    : Array.isArray(v)
+      ? v.map(fill)
+      : v && typeof v === "object"
+        ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, fill(x)]))
+        : v;
+const repoUrl = (name) => `https://github.com/${GITHUB_USER}/${name}`;
 
 export const profile = {
-  name: NAME,
-  role: "Recent graduate software engineer",
-  location: LOCATION,
-  email: EMAIL,
+  ...fill(profileData),
+  name: env.VITE_NAME || "Your Name",
+  email: env.VITE_EMAIL || "",
   github: `https://github.com/${GITHUB_USER}`,
   githubUser: GITHUB_USER,
-  linkedin: LINKEDIN,
-  cvUrl: CV_URL,
-
-  heroTagline:
-    "I build software end to end, from React front ends and mobile apps to the servers, networks, and self-hosted infrastructure that run them.",
-
-  availability: "Open to graduate software engineering roles",
-
-  education: {
-    degree: "BSc Computer Science (Hons)",
-    classification: "First Class (1:1)",
-    institution: "Kingston University",
-  },
-
-  about: [
-    "I'm a recent graduate software engineer based in London. I studied Computer Science at first-class level, and spent my degree building real systems: a media aggregation & sorting system for my final-year project, mobile apps with React Native, and coursework that pushed me to think like an engineer, not just a coder.",
-    "Outside of my studies, I run a home lab: a Proxmox host carrying a stack of self-hosted services, three cloud VPS instances, and a growing interest in running local AI models on my own hardware. If it can be self-hosted, I've probably tried to.",
-  ],
+  linkedin: env.VITE_LINKEDIN || "",
+  cvUrl: env.VITE_CV_URL || "",
 };
 
-// Numbers shown in the stats strip under the hero.
-export const stats = [
-  { value: "7+", label: "Projects built end to end" },
-  { value: "19", label: "Languages & frameworks" },
-  { value: "15", label: "Self-hosted services running" },
-  { value: "1:1", label: "First-class BSc Computer Science" },
-];
+export const experience = fill(experienceData);
+export const interests = fill(interestsData);
 
-// Experience & education timeline, newest first.
-export const experience = [
-  {
-    period: "2025 - Present",
-    title: "Graduate Software Engineer",
-    org: "Open to roles · London / Remote",
-    detail:
-      "Seeking graduate and early-career software engineering roles. Open to full-time starts only.",
-  },
-  {
-    period: "Summers 2020 - 2026",
-    title: "Network Infrastructure Engineer (Volunteer)",
-    org: "Jalsa Salana UK · Ahmadiyya Muslim Association",
-    detail:
-      "Engineered a high-availability network for 20,000+ concurrent users with 99.9% uptime, automating hardware monitoring via custom Linux scripts; configured hardware and structured cabling across multi-site event environments, troubleshooting in real time under time-critical conditions.",
-  },
-  {
-    period: "Nov 2025 - Feb 2026",
-    title: "Optical Assistant",
-    org: "Specsavers · London",
-    detail:
-      "Managed sensitive patient data systems with 100% accuracy in a high-volume clinical environment; advised customers on eyewear options and completed sales; fitted and adjusted spectacle frames with precision.",
-  },
-  {
-    period: "2025 - 2026",
-    title: "Final-Year Project: MASS",
-    org: "Kingston University",
-    detail:
-      "Built MASS (Media Aggregation & Sorting System), a cross-platform React Native app that aggregates media from device storage, Google Photos, and a home NAS into one timeline view, backed by a RESTful Express.js backend; cut data retrieval latency 30% via API caching.",
-  },
-  {
-    period: "2023 - 2026",
-    title: "BSc Computer Science (Hons)",
-    org: "Kingston University · First Class (1:1)",
-    detail:
-      "Coursework spanning web and mobile development, databases, networking, and systems programming, capped by the MASS final-year project.",
-  },
-];
+// `repo` in projects.json / repos.json is just the repository name; the full
+// GitHub URL is built from VITE_GITHUB_USER. `images` lists filenames from
+// public/images/projects/ (several = carousel); empty falls back to `image`.
+export const projects = fill(projectsData).map((p) => ({
+  ...p,
+  repo: p.repo ? repoUrl(p.repo) : undefined,
+}));
+export const githubRepos = reposData.map((r) => ({ ...r, url: repoUrl(r.name) }));
 
-// Compact cards in the "Beyond the terminal" section.
-export const interests = [
-  {
-    name: "Self-hosting",
-    detail:
-      "If it can run on my own hardware, it probably does, on a Proxmox host carrying a dozen services.",
-  },
-  {
-    name: "Local LLMs",
-    detail:
-      "Running local LLMs at home to learn how inference actually works under the hood.",
-  },
-  {
-    name: "Hardware tinkering",
-    detail:
-      "Arduino projects and sensor experiments; the gyroscope treasure hunt started as one of those.",
-  },
-  {
-    name: "Browser mods",
-    detail:
-      "Customising Floorp with a sidebar styled after Opera GX. Small UI details matter to me.",
-  },
-];
+export const skills = skillsData;
 
-// Case-study project cards. `role` is a short context line; `features` are
-// the highlight bullets; `stack` replaces the old tag list. `detail` holds
-// the long-form write-up for the expanded view; `image` is its art.
-export const projects = [
-  {
-    id: "mass",
-    title: "MASS: Media Aggregation & Sorting System",
-    year: "2026",
-    role: "Final-year project · Solo",
-    description:
-      "A cross-platform React Native app that aggregates media from device storage, Google Photos, and a home NAS into one timeline view, backed by a RESTful Express.js backend.",
-    image: "/images/projects/mass.svg",
-    detail:
-      "Built as my final-year project, MASS pulls media from three sources: device storage, Google Photos, and a Synology NAS on the home network, and merges them into one chronological timeline. The Express backend sits between the app and each source, normalising metadata so sorting by date, type, or location stays consistent regardless of where the file lives. Most of my engineering time went into the caching layer: repeated timeline fetches hit the cache instead of re-querying all three sources, which is where the 30% latency reduction came from.",
-    features: [
-      "Reduced data retrieval latency 30% through optimized API caching",
-      "Metadata-driven sorting across diverse media types",
-      "RESTful Express.js backend cutting server response time 15% via middleware design",
-      "CI/CD pipelines reducing manual testing and integration time 20%",
-    ],
-    stack: ["React Native", "Expo", "Node.js", "Express.js"],
-    repo: `https://github.com/${GITHUB_USER}/Abstracted-MASS-PublicVer`,
-    highlight: true,
-  },
-  {
-    id: "radar",
-    title: "Hardware Tinkering: 240 GHz Doppler Radar",
-    role: "Hardware project · ESP32",
-    description:
-      "A 240 GHz radio-frequency setup that uses the Doppler effect to track three moving targets, with an Arduino ESP32 board processing the sensor data and serving live results as a website.",
-    image: "/images/projects/radar.svg",
-    detail:
-      "A hardware build around a 240 GHz Doppler radar module and an ESP32. The board samples the RF signal, extracts velocity from the Doppler shift, and keeps track of up to three targets at once. Results stream over Wi-Fi to a small web dashboard I wrote so I could watch the tracking live. Half project, half excuse to get comfortable with raw sensor data.",
-    features: [
-      "240 GHz RF sensing exploiting the Doppler shift for motion tracking",
-      "Tracks three moving targets simultaneously",
-      "ESP32 board processes the raw sensor signal in real time",
-      "Live results served through a web interface",
-    ],
-    stack: ["ESP32", "Arduino"],
-  },
-  {
-    id: "qr-hunt",
-    title: "QR Code Treasure Hunt",
-    year: "2024",
-    role: "Group project · Year 2 final coursework",
-    description:
-      "A web-based scavenger hunt where participants scan physical QR codes to claim items and accumulate points, with a real-time leaderboard for competitive gameplay.",
-    image: "/images/projects/qr-hunt.svg",
-    detail:
-      "A scavenger hunt for real spaces: each item is hidden behind a physical QR code that participants scan with their phone to claim points. The server validates every scan so codes can't be replayed from the leaderboard page, and the board updates in real time as teams race around the venue. We shipped it as a group within a fixed coursework window, which mostly taught me how to split work cleanly across people.",
-    features: [
-      "QR generation with server-side validation logic",
-      "Real-time leaderboard driving competitive play",
-      "Shipped as a team within a fixed coursework window",
-    ],
-    stack: ["React.js", "JavaScript"],
-    repo: `https://github.com/${GITHUB_USER}/Treasure-Hunt-App`,
-  },
-  {
-    id: "crudl",
-    title: "CRUDL: React Native Demo",
-    year: "2024",
-    role: "University project",
-    description:
-      "A full CRUD(L) application built to learn React Native properly: create, read, update, delete, and list flows across screens.",
-    image: "/images/projects/crudl.svg",
-    detail:
-      "A deliberately small React Native app that exists because I wanted to actually understand the framework before building anything big on it. It walks through the full create-read-update-delete-list cycle with separate screens for list, detail, and edit. The navigation between them is where most of my learning happened.",
-    features: [
-      "Complete CRUD(L) flows across multiple screens",
-      "Navigation between list, detail, and edit views",
-      "First serious pass at mobile state management",
-    ],
-    stack: ["React Native", "JavaScript"],
-    repo: `https://github.com/${GITHUB_USER}/Project-MAD-crudler`,
-  },
-  {
-    id: "routines",
-    title: "Routines App",
-    year: "2024",
-    role: "Personal project · Android",
-    description:
-      "A native Android habit tracker built in Kotlin with MVVM architecture and Room Database for offline-first persistence, plus notification-driven reminders and progress visualization.",
-    image: "/images/projects/routines.svg",
-    detail:
-      "A habit tracker I built for myself in native Android. Kotlin with MVVM, Room for offline-first persistence, and system notifications that nudge at set times. The progress view plots completion trends so a broken streak is obvious at a glance. It's the project where I got serious about architecture rather than just making screens work.",
-    features: [
-      "MVVM architecture with a dedicated ViewModel layer",
-      "Room database for offline-first local persistence",
-      "Notification-driven reminders and habit completion trends",
-    ],
-    stack: ["Kotlin", "Android Studio", "MVVM", "Room"],
-    repo: `https://github.com/${GITHUB_USER}/Kotlin-TB2P1`,
-  },
-  {
-    id: "geo-hunt",
-    title: "Location-Based Treasure Hunt App",
-    year: "2024",
-    role: "University project · Mobile Development",
-    description:
-      "A GPS and proximity-driven React Native game where players claim hidden caches based on physical location and device orientation, backed by a RESTful API.",
-    image: "/images/projects/geo-hunt.svg",
-    detail:
-      "The mobile-development coursework project: a game where hidden caches are claimed by being physically near them, with the device's compass giving bearing and distance to guide you in. The UI re-renders as you move so the map feels live rather than polled. The backend was the graded piece, and I pushed it to 90% unit-test coverage before submission.",
-    features: [
-      "Geolocation and compass APIs for real-time bearing and distance",
-      "Responsive UI that updates dynamically as the player moves",
-      "RESTful API backend at 90% code coverage via automated unit testing",
-    ],
-    stack: ["React Native", "GPS", "Sensor APIs"],
-    repo: `https://github.com/${GITHUB_USER}/MAD-Treasure-Hunt`,
-  },
-  {
-    id: "ai-bot",
-    title: "AI Discord Bot",
-    year: "2025",
-    role: "Personal project · Self-hosted",
-    description:
-      "A Python Discord bot with text chat and voice, powered by a Cloud Gemma 4 31B-IT model with a local fallback to a quantised Gemma 4 E4B.",
-    image: "/images/projects/ai-bot.svg",
-    detail:
-      "A self-hosted Discord bot that answers in text channels and joins voice channels, powered by a Cloud Gemma 4 31B-IT model with a local quantised Gemma 4 E4B as fallback when the cloud is down or slow. It runs on my home hardware around the clock, which doubles as a testbed for prompting behaviour before I wire anything similar into other projects.",
-    features: [
-      "Text and voice channels backed by an LLM",
-      "Cloud Gemma 4 31B-IT primary, with a local Gemma 4 E4B QAT fallback",
-      "Runs continuously on home hardware via Discord API",
-    ],
-    stack: ["Python", "LLM", "Voice", "Discord API"],
-    tags: ["Private-Repo"],
-  },
-  {
-    id: "cv-builder",
-    title: "CV Builder",
-    year: "2024/2025",
-    role: "Personal project · Desktop",
-    description:
-      "A desktop CV builder written in Java with a Swing interface: form-driven editing that generates a clean, printable CV.",
-    image: "/images/projects/cv-builder.svg",
-    detail:
-      "An early desktop project in Java and Swing: form-driven editing of CV sections with a live preview and printable output. Built long before I had any web experience, and still the reason I understand why most people prefer not building UIs in Swing.",
-    features: [
-      "Form-driven editing of CV sections",
-      "Live preview before export",
-      "Clean, printable output from the desktop app",
-    ],
-    stack: ["Java", "Swing"],
-    tags: ["GitLab"],
-  },
-];
+// A stat either carries its own `value` or is counted `from` another section,
+// so the numbers can't drift from what the page actually lists.
+const counts = { projects: projects.length, skills: skillsData.languages.length };
+export const stats = fill(statsData).map((s) => ({
+  label: s.label,
+  value: s.from ? String(counts[s.from]) : s.value,
+}));
 
-export const githubRepos = [
-  {
-    name: "Abstracted-MASS-PublicVer",
-    description:
-      "Public version of my final-year project: a media aggregation & sorting app across device storage, Google Photos, and a home NAS.",
-    language: "JavaScript",
-    stars: 1,
-    url: `https://github.com/${GITHUB_USER}/Abstracted-MASS-PublicVer`,
-  },
-  {
-    name: "Treasure-Hunt-App",
-    description:
-      "QR-code treasure hunt built for my Professional Environments year 2 final coursework.",
-    language: "JavaScript",
-    stars: 3,
-    url: `https://github.com/${GITHUB_USER}/Treasure-Hunt-App`,
-  },
-  {
-    name: "MAD-Treasure-Hunt",
-    description:
-      "GPS and proximity-driven React Native treasure hunt built for my mobile development coursework; players claim hidden caches from physical location.",
-    language: "JavaScript",
-    stars: 0,
-    url: `https://github.com/${GITHUB_USER}/MAD-Treasure-Hunt`,
-  },
-  {
-    name: "Kotlin-TB2P1",
-    description:
-      "Native Android habit tracker in Kotlin: MVVM architecture, Room persistence, and reminder notifications.",
-    language: "Kotlin",
-    stars: 0,
-    url: `https://github.com/${GITHUB_USER}/Kotlin-TB2P1`,
-  },
-  {
-    name: "Project-MAD-crudler",
-    description: "University project for learning React Native: a CRUD(L) demo app.",
-    language: "JavaScript",
-    stars: 0,
-    url: `https://github.com/${GITHUB_USER}/Project-MAD-crudler`,
-  },
-  {
-    name: "LearningGo",
-    description: "Small programs and notes from my self-taught Go journey.",
-    language: "Go",
-    stars: 0,
-    url: `https://github.com/${GITHUB_USER}/LearningGo`,
-  },
-  {
-    name: "Opera-GX-Styled-Floorp-Sidebar",
-    description: "Sidebar mod for the Floorp browser, styled after Opera GX.",
-    language: "CSS",
-    stars: 0,
-    url: `https://github.com/${GITHUB_USER}/Opera-GX-Styled-Floorp-Sidebar`,
-  },
-];
-
-export const skills = {
-  languages: [
-    "React Native",
-    "Kotlin",
-    "Java",
-    "C++",
-    "Go",
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "TypeScript",
-    "Python",
-    "Bash",
-    "PHP",
-    "SQL",
-    "JSON",
-    "LaTeX",
-    "React.js",
-    "Node.js",
-    "Express.js",
-    "Oracle Apex",
-  ],
-  tools: [
-    "IntelliJ IDEA",
-    "WebStorm",
-    "PyCharm",
-    "Jupyter",
-    "Arduino IDE",
-    "Docker",
-    "Git",
-    "RESTful APIs",
-    "VS Code",
-    "NeoVim",
-    "Android Studio",
-    "Expo",
-    "Linux",
-    "Agile/Scrum",
-    "CI/CD",
-    "NetBeans",
-    "Debian",
-  ],
-};
-
-export const homelab = [
-  { name: "Proxmox", detail: "Single-node hypervisor running the whole stack" },
-  { name: "Own Media Server", detail: "Self-hosted streaming (WIP)" },
-  { name: "SearXNG", detail: "Private metasearch engine" },
-  { name: "Dockhand", detail: "Container management UI" },
-  { name: "Nginx", detail: "Reverse proxy for the house network" },
-  { name: "Pi-hole + AdGuard Home", detail: "Network-wide ad and tracker blocking" },
-  { name: "Tailscale", detail: "Mesh networking between home and VPS" },
-  { name: "3 cloud VPS instances", detail: "Off-site services and failover" },
-  { name: "OpenVPN + WireGuard", detail: "Self-hosted VPN for devices on the move" },
-  { name: "OpenWebUI", detail: "Chat front end for local models" },
-  { name: "Gitea", detail: "Self-hosted Git server" },
-  { name: "Vaultwarden", detail: "Self-hosted password manager" },
-  { name: "Immich", detail: "Private photo and video library" },
-  { name: "Home Assistant", detail: "Home automation hub" },
-  { name: "Termix", detail: "Self-built containerised SSH manager for hopping between device sessions via a central web UI" },
-];
-
-export const localAI = {
-  heading: "Local AI, on my own hardware",
-  body: [
-    "I run my own self-hosted language models on my own hardware. Currently running a custom flavour of a quantised Qwen 3.8 27B Model served through BeeLLama over to my OpenWebUI instance running on my HomeLab, as a way to learn on how to deploy and utilise LLMs in the modern day world and also help me study how they work in a more fundamental sense, when it comes down to their inference, context management and serving it.",
-    "It's not just Local Models I utilise, I make use of a mix of both Local and Cloud hosted models in my own applications such as an AI Model Powered Discord Chat Bot, a discord bot capable of interacting with users both in Text format and also in Voice Calls, with the goal of acting like a regular human user. This pushes me towards building and writing code that works with both small and larger models which would react to certain prompts differently.",
-  ],
-};
-
-// Self-assessed working proficiency, not a byte share: weighted by how many
-// projects were built in each language and current fluency, not raw lines.
-// Java leads; C++ ahead of Python; Go mid-band;
-// JS/CSS raised on project count; TypeScript low, known via JavaScript only.
-export const languageStats = [
-  { name: "Java", pct: 56 },
-  { name: "JavaScript", pct: 48 },
-  { name: "C++", pct: 28 },
-  { name: "Python", pct: 22 },
-  { name: "Go", pct: 18 },
-  { name: "CSS", pct: 16 },
-  { name: "TypeScript", pct: 14 },
-  { name: "Kotlin", pct: 12 },
-];
+export const homelab = homelabData.items;
+export const homelabMore = homelabData.more;
+export const localAI = homelabData.localAI;
+export const languageStats = languagesData;

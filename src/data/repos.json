@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Abstracted-MASS-PublicVer",
+    "description": "Public version of my final-year project: a media aggregation & sorting app across device storage, Google Photos, and a home NAS.",
+    "language": "JavaScript"
+  },
+  {
+    "name": "Treasure-Hunt-App",
+    "description": "QR-code treasure hunt built for my Professional Environments year 2 final coursework.",
+    "language": "JavaScript"
+  },
+  {
+    "name": "MAD-Treasure-Hunt",
+    "description": "GPS and proximity-driven React Native treasure hunt built for my mobile development coursework; players claim hidden caches from physical location.",
+    "language": "JavaScript"
+  },
+  {
+    "name": "Kotlin-TB2P1",
+    "description": "Native Android habit tracker in Kotlin: MVVM architecture, Room persistence, and reminder notifications.",
+    "language": "Kotlin"
+  },
+  {
+    "name": "Project-MAD-crudler",
+    "description": "University project for learning React Native: a CRUD(L) demo app.",
+    "language": "JavaScript"
+  },
+  {
+    "name": "LearningGo",
+    "description": "Small programs and notes from my self-taught Go journey.",
+    "language": "Go"
+  }
+]

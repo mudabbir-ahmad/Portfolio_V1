@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Self-hosting",
+    "icon": "server",
+    "detail": "If it can run on my own hardware, it probably does. One Proxmox host, around 15 services, and a list of things I still want to try."
+  },
+  {
+    "name": "Local LLMs",
+    "icon": "cpu",
+    "detail": "Running language models at home to learn how inference actually works under the hood."
+  },
+  {
+    "name": "Hardware tinkering",
+    "icon": "chip",
+    "detail": "Arduino and ESP32 builds and sensor experiments. The Doppler radar started as one of those."
+  },
+  {
+    "name": "Web & mobile development",
+    "icon": "phone",
+    "detail": "Most of what I build ends up as a React site or a React Native app. I like the point where a rough idea becomes something you can actually tap on."
+  }
+]

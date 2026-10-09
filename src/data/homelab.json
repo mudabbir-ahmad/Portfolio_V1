@@ -1,0 +1,73 @@
+{
+  "items": [
+    {
+      "name": "Proxmox",
+      "detail": "Single-node hypervisor running the whole stack"
+    },
+    {
+      "name": "Own Media Server",
+      "detail": "A self-hosted streaming server I'm building from scratch",
+      "wip": true
+    },
+    {
+      "name": "SearXNG",
+      "detail": "Private metasearch engine"
+    },
+    {
+      "name": "Dockhand",
+      "detail": "Container management UI"
+    },
+    {
+      "name": "Nginx",
+      "detail": "Reverse proxy for the house network"
+    },
+    {
+      "name": "Pi-hole + AdGuard Home",
+      "detail": "Network-wide ad and tracker blocking"
+    },
+    {
+      "name": "Tailscale",
+      "detail": "Mesh networking between home and VPS"
+    },
+    {
+      "name": "3 cloud VPS instances",
+      "detail": "Off-site services and failover"
+    },
+    {
+      "name": "OpenVPN + WireGuard",
+      "detail": "Self-hosted VPN for devices on the move"
+    },
+    {
+      "name": "OpenWebUI",
+      "detail": "Chat front end for local models"
+    },
+    {
+      "name": "Gitea",
+      "detail": "Self-hosted Git server"
+    },
+    {
+      "name": "Vaultwarden",
+      "detail": "Self-hosted password manager"
+    },
+    {
+      "name": "Immich",
+      "detail": "Private photo and video library"
+    },
+    {
+      "name": "Home Assistant",
+      "detail": "Home automation hub"
+    },
+    {
+      "name": "Termix",
+      "detail": "Self-built containerised SSH manager for hopping between device sessions via a central web UI"
+    }
+  ],
+  "localAI": {
+    "heading": "Local AI, on my own hardware",
+    "body": [
+      "I run language models on my own hardware. Right now that's a quantised Qwen 3.8 27B build, served through BeeLLama to the OpenWebUI instance on my homelab. It's how I'm learning to deploy LLMs properly and to understand what's going on underneath: inference, context management and serving.",
+      "I mix local and cloud-hosted models in my own projects too. The main one is a Discord bot that chats in text channels and joins voice calls, with the aim of feeling like a regular member of the server. Building it means writing code that copes with both small and large models, which can react to the same prompt very differently."
+    ]
+  },
+  "more": "...and plenty more across the homelab and VPS instances. These are just the ones I'd miss first."
+}

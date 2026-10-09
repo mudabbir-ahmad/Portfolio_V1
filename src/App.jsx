@@ -13,40 +13,33 @@ import Contact from "./components/Contact.jsx";
 import Cursor from "./components/Cursor.jsx";
 import Reveal from "./components/Reveal.jsx";
 
+// Hero animates itself on load. Sections whose cards stagger in on their own
+// (experience, projects, repos, interests, homelab) are not wrapped in Reveal,
+// so the two effects don't stack.
 export default function App() {
   return (
     <>
       <Cursor />
       <Nav />
       <main>
-        <Reveal>
-          <Hero />
-        </Reveal>
+        <Hero />
         <Reveal delay={0.05}>
           <Stats />
         </Reveal>
         <Reveal>
           <About />
         </Reveal>
-        <Reveal>
-          <Experience />
-        </Reveal>
+        <Experience />
         <Projects />
         <Reveal>
           <PushTracker />
         </Reveal>
-        <Reveal>
-          <GitHubGrid />
-        </Reveal>
+        <GitHubGrid />
         <Reveal>
           <SkillsCarousel />
         </Reveal>
-        <Reveal>
-          <Interests />
-        </Reveal>
-        <Reveal>
-          <Homelab />
-        </Reveal>
+        <Interests />
+        <Homelab />
       </main>
       <Reveal>
         <Contact />

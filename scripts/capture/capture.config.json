@@ -1,0 +1,126 @@
+{
+  "outputDir": "public/images/projects",
+  "projectsFile": "src/data/projects.json",
+  "workDir": ".capture-work",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "deviceScaleFactor": 1,
+  "colorScheme": "light",
+  "settleMs": 400,
+  "projects": [
+    {
+      "id": "portfolio",
+      "_note": "This site. Builds and runs the real server, so the GitHub tracker has data.",
+      "enabled": true,
+      "source": {
+        "local": "."
+      },
+      "serve": {
+        "command": "npm run build && npm start",
+        "url": "http://localhost:3001",
+        "readyTimeoutSec": 180
+      },
+      "steps": [
+        {
+          "goto": "/"
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "screenshot": "home"
+        },
+        {
+          "scrollTo": ".project-grid"
+        },
+        {
+          "wait": 900
+        },
+        {
+          "screenshot": "projects"
+        },
+        {
+          "click": ".project-card"
+        },
+        {
+          "wait": 900
+        },
+        {
+          "screenshot": "detail"
+        },
+        {
+          "press": "Escape"
+        },
+        {
+          "scrollTo": ".homelab-grid"
+        },
+        {
+          "wait": 900
+        },
+        {
+          "screenshot": "homelab"
+        }
+      ]
+    },
+    {
+      "id": "mass",
+      "_note": "Phone app. Drop emulator or device screenshots in scripts/capture/manual/mass/.",
+      "manual": true,
+      "enabled": true
+    },
+    {
+      "id": "geo-hunt",
+      "_note": "React Native app. Emulator screenshots.",
+      "manual": true,
+      "enabled": true
+    },
+    {
+      "id": "routines",
+      "_note": "Android. Use the emulator screenshot button in Android Studio.",
+      "manual": true,
+      "enabled": true
+    },
+    {
+      "id": "crudl",
+      "_note": "React Native app. Emulator screenshots.",
+      "manual": true,
+      "enabled": true
+    },
+    {
+      "id": "qr-hunt",
+      "_note": "Web app, screenshots taken by hand at 1440x900.",
+      "manual": true,
+      "enabled": true
+    },
+    {
+      "id": "cv-builder",
+      "_note": "Java Swing desktop app. Window screenshots.",
+      "manual": true,
+      "enabled": true
+    },
+    {
+      "id": "radar",
+      "_note": "Hardware. Stock photo of an ESP32 board until I photograph the build.",
+      "manual": true,
+      "enabled": true
+    },
+    {
+      "id": "ai-bot",
+      "_note": "Discord bot. Stock photo of Python code; chat screenshots would leak other users.",
+      "manual": true,
+      "enabled": true
+    },
+    {
+      "id": "homelab",
+      "_note": "Stock photo of network cabling.",
+      "manual": true,
+      "enabled": true
+    }
+  ],
+  "manualMaxWidth": {
+    "portrait": 720,
+    "landscape": 1440
+  }
+}

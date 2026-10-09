@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 
+// Custom pointer for mouse users: a small dot that stretches in the direction of
+// travel and swells slightly over links and buttons.
 export default function Cursor() {
   const reduced = useReducedMotion();
   const [active, setActive] = useState(false);
@@ -92,8 +94,8 @@ export default function Cursor() {
   if (!active) return null;
 
   return (
-    <div className="cursor-dot" aria-hidden="true">
-      <span ref={dotRef} />
+    <div className="cursor" aria-hidden="true">
+      <span className="cursor-dot" ref={dotRef} />
     </div>
   );
 }

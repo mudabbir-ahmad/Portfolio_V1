@@ -16,7 +16,7 @@ const contactIcons = {
   linkedin: {
     vb: "0 0 24 24",
     inner:
-      '<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.048c.477-.9 1.637-1.85 3.378-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.04 9.429C3.89 9.429 2.967 8.511 2.967 7.365c0-1.154.926-2.074 2.073-2.074 1.146 0 2.074.92 2.074 2.074 0 1.146-.922 2.068-2.075 2.073zm.004 11.02h-3.44V9h3.44v11.45z"/>',
+      '<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>',
   },
 };
 
@@ -48,14 +48,13 @@ function PrivacyNote() {
       {open && (
         <div id="privacy-panel" className="privacy-panel">
           <p>
-            <strong>{profile.name}</strong> ({profile.email}) is the data controller for this
+            <strong>{profile.name}</strong>{profile.email && ` (${profile.email})`} is the data controller for this
             site. No cookies, analytics, or third-party trackers are used, and nothing you do here
             is logged or stored on a server. Your light/dark theme choice is saved in your
             browser's local storage only and is never transmitted anywhere. The Contributions
             graph above is fetched by this site's own server, not your browser, so GitHub never
-            sees you as a visitor. If you email me, I'll only use your details to reply. Under UK
-            GDPR you can request access to or deletion of any data held about you by emailing{" "}
-            {profile.email}.
+            sees you as a visitor. If you email me, I'll only use your details to reply.
+            {profile.email && ` Under UK GDPR you can request access to or deletion of any data held about you by emailing ${profile.email}.`}
           </p>
         </div>
       )}
@@ -68,24 +67,28 @@ export default function Contact() {
   return (
     <footer className="contact" id="contact">
       <div className="container">
-        <p className="eyebrow eyebrow--light">Get in touch</p>
+        <p className="eyebrow eyebrow--plain eyebrow--light">Get in touch</p>
         <h2 className="contact-title">Let's talk.</h2>
         <p className="contact-lede">
           I'm open to graduate and junior software engineering roles, or just a good conversation about self-hosting.
         </p>
         <div className="contact-actions">
-          <a className="btn btn-primary" href={`mailto:${profile.email}`}>
-            <ContactGlyph name="email" />
-            {profile.email}
-          </a>
+          {profile.email && (
+            <a className="btn btn-primary" href={`mailto:${profile.email}`}>
+              <ContactGlyph name="email" />
+              {profile.email}
+            </a>
+          )}
           <a className="btn btn-outline-light" href={profile.github} target="_blank" rel="noreferrer">
             <ContactGlyph name="github" />
             GitHub
           </a>
-          <a className="btn btn-outline-light" href={profile.linkedin} target="_blank" rel="noreferrer">
-            <ContactGlyph name="linkedin" />
-            LinkedIn
-          </a>
+          {profile.linkedin && (
+            <a className="btn btn-outline-light" href={profile.linkedin} target="_blank" rel="noreferrer">
+              <ContactGlyph name="linkedin" />
+              LinkedIn
+            </a>
+          )}
         </div>
       </div>
       <div className="container footer-bar">

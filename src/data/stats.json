@@ -1,0 +1,18 @@
+[
+  {
+    "from": "projects",
+    "label": "Projects built and written up"
+  },
+  {
+    "from": "skills",
+    "label": "Languages & frameworks"
+  },
+  {
+    "value": "15+",
+    "label": "Self-hosted services running"
+  },
+  {
+    "value": "2k+",
+    "label": "Users kept online at 99.9% uptime"
+  }
+]

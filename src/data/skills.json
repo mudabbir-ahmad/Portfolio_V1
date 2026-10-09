@@ -1,0 +1,35 @@
+{
+  "languages": [
+    "Java",
+    "C++",
+    "JavaScript",
+    "Python",
+    "Kotlin",
+    "Go",
+    "SQL",
+    "Bash",
+    "PHP",
+    "HTML/CSS",
+    "React.js",
+    "React Native",
+    "Node.js",
+    "Express.js",
+    "Tailwind CSS",
+    "Expo",
+    "Oracle APEX"
+  ],
+  "tools": [
+    "Git",
+    "Docker",
+    "Linux",
+    "Debian",
+    "Nginx",
+    "Proxmox",
+    "CI/CD",
+    "IntelliJ IDEA",
+    "VS Code",
+    "Android Studio",
+    "RESTful APIs",
+    "Agile/Scrum"
+  ]
+}

@@ -53,6 +53,7 @@ export default function SkillsCarousel() {
   return (
     <section className="skills section" id="skills">
       <div className="container">
+        <p className="eyebrow">Toolbox</p>
         <h2 className="section-title">Skills &amp; tools</h2>
         <Marquee label="Languages & frameworks" items={skills.languages} />
         <Marquee label="Tools & platforms" items={skills.tools} />

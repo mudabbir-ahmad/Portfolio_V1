@@ -1,4 +1,6 @@
 import { interests } from "../content.js";
+import { Stagger, StaggerItem } from "./Stagger.jsx";
+import { Icon } from "./icons.jsx";
 
 export default function Interests() {
   return (
@@ -6,14 +8,17 @@ export default function Interests() {
       <div className="container">
         <p className="eyebrow">Beyond the terminal</p>
         <h2 className="section-title">Interests</h2>
-        <div className="interest-grid">
+        <Stagger className="interest-grid">
           {interests.map((i) => (
-            <article key={i.name} className="interest-card">
+            <StaggerItem as="article" key={i.name} className="interest-card">
+              <span className="interest-icon">
+                <Icon name={i.icon} />
+              </span>
               <h3>{i.name}</h3>
               <p>{i.detail}</p>
-            </article>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

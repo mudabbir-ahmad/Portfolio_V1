@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Java",
+    "pct": 56
+  },
+  {
+    "name": "JavaScript",
+    "pct": 48
+  },
+  {
+    "name": "C++",
+    "pct": 28
+  },
+  {
+    "name": "Python",
+    "pct": 22
+  },
+  {
+    "name": "Go",
+    "pct": 18
+  },
+  {
+    "name": "CSS",
+    "pct": 16
+  },
+  {
+    "name": "Kotlin",
+    "pct": 12
+  }
+]
