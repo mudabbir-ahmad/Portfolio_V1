@@ -21,13 +21,13 @@
     ],
     "repo": "Abstracted-MASS-PublicVer",
     "images": [
-      "mass-1.webp",
-      "mass-2.webp",
-      "mass-3.webp",
-      "mass-4.webp",
+      "mass-7.webp",
       "mass-5.webp",
       "mass-6.webp",
-      "mass-7.webp"
+      "mass-1.webp",
+      "mass-2.webp",
+      "mass-4.webp",
+      "mass-3.webp"
     ],
     "period": "Sep 2025 - Apr 2026",
     "orientation": "portrait",
@@ -109,11 +109,11 @@
     ],
     "repo": "MAD-Treasure-Hunt",
     "images": [
-      "geo-hunt-1.webp",
-      "geo-hunt-2.webp",
       "geo-hunt-3.webp",
+      "geo-hunt-1.webp",
       "geo-hunt-4.webp",
       "geo-hunt-5.webp",
+      "geo-hunt-2.webp",
       "geo-hunt-6.webp",
       "geo-hunt-7.webp"
     ],
@@ -142,11 +142,11 @@
     "repo": "Kotlin-TB2P1",
     "images": [
       "routines-1.webp",
+      "routines-6.webp",
       "routines-2.webp",
       "routines-3.webp",
       "routines-4.webp",
-      "routines-5.webp",
-      "routines-6.webp"
+      "routines-5.webp"
     ],
     "period": "Jan 2026 - Apr 2026",
     "orientation": "portrait"
@@ -196,11 +196,11 @@
     ],
     "repo": "Treasure-Hunt-App",
     "images": [
+      "qr-hunt-5.webp",
       "qr-hunt-1.webp",
       "qr-hunt-2.webp",
       "qr-hunt-3.webp",
-      "qr-hunt-4.webp",
-      "qr-hunt-5.webp"
+      "qr-hunt-4.webp"
     ],
     "period": "Jan 2025 - Apr 2025",
     "orientation": "landscape"
@@ -253,9 +253,9 @@
     "repo": "Project-MAD-crudler",
     "images": [
       "crudl-1.webp",
-      "crudl-2.webp",
       "crudl-3.webp",
       "crudl-4.webp",
+      "crudl-2.webp",
       "crudl-5.webp"
     ],
     "period": "2025",
