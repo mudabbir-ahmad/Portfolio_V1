@@ -928,7 +928,6 @@ main {
   color: var(--ink-soft);
 }
 
-.timeline-points li::before,
 .project-features li::before {
   content: "";
   position: absolute;
@@ -2280,4 +2279,16 @@ html.has-custom-cursor * {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   vertical-align: 2px;
+}
+
+/* experience uses real bullets; project lists keep the short dash */
+.timeline-points li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
 }

@@ -49,11 +49,14 @@ function PrivacyNote() {
         <div id="privacy-panel" className="privacy-panel">
           <p>
             <strong>{profile.name}</strong>{profile.email && ` (${profile.email})`} is the data controller for this
-            site. No cookies, analytics, or third-party trackers are used, and nothing you do here
-            is logged or stored on a server. Your light/dark theme choice is saved in your
-            browser's local storage only and is never transmitted anywhere. The Contributions
-            graph above is fetched by this site's own server, not your browser, so GitHub never
-            sees you as a visitor. If you email me, I'll only use your details to reply.
+            site. It sits behind Cloudflare, which handles traffic to it and applies bot, AI-crawler
+            and scraping protection. In doing so Cloudflare may process your IP address and
+            set its own security cookies; I don't receive or manage any of that, only the
+            aggregate statistics Cloudflare provides. I run no analytics, advertising or
+            tracking of my own, and nothing you do here is stored by the site itself. Your light/dark
+            theme choice is saved in your browser's local storage only and is never transmitted.
+            The Contributions graph is fetched by this site's own server, not your browser, so GitHub
+            never sees you as a visitor. If you email me, I'll only use your details to reply.
             {profile.email && ` Under UK GDPR you can request access to or deletion of any data held about you by emailing ${profile.email}.`}
           </p>
         </div>

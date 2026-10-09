@@ -17,12 +17,11 @@ Everything else (About text, experience, projects, skills...) is in `src/data/*.
 ```
 docker compose up -d --build     # or: npm run docker
 ```
-The container is non-root, read-only, capability-less and resource-capped, and bound
-to 127.0.0.1 (put a TLS proxy in front, or set `TLS_CERT`/`TLS_KEY` / `FORCE_HTTPS`).
-Values are passed at run time, so the same image works for any identity. Keep the
-committed compose file generic and put real values in a gitignored
-`docker-compose.override.yml`, or edit the environment block directly.
-To ship a CV, set `VITE_CV_URL` and uncomment the `volumes:` line (the CV is never baked in).
+The container is non-root, read-only, capability-less and resource-capped. It publishes
+port 3001 only; Nginx Proxy Manager sits in front for TLS and the public side.
+The compose defaults are the public details from the CV. Put the one secret, `GITHUB_TOKEN`,
+in a gitignored root `.env` file (compose reads it automatically), never in the compose file.
+The CV is mounted from `public/CV` at run time and is never baked into the image.
 
 ## Without Docker
 ```

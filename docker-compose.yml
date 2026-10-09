@@ -4,9 +4,9 @@
 # copied into the image (.dockerignore), so nothing personal lives in it.
 # Running without Docker (npm run dev / npm start) reads secrets/.env instead.
 #
-# Edit the placeholders here, or keep this file generic and put your real
-# values in a gitignored docker-compose.override.yml (compose merges it in
-# automatically) or in a root .env file (compose substitutes ${VARS} from it).
+# The defaults below are the public details from the CV. The one secret,
+# GITHUB_TOKEN, is never written here: put it in a gitignored root .env file
+# (compose substitutes ${VARS} from it), or in docker-compose.override.yml.
 services:
   portfolio:
     build: .
@@ -14,21 +14,21 @@ services:
     container_name: portfolio
     restart: unless-stopped
     ports:
-      # Localhost only; put a TLS reverse proxy in front for public access.
-      - "${BIND:-127.0.0.1}:${HOST_PORT:-3001}:3001"
+      # Nginx Proxy Manager handles TLS and the public side, so this is a plain mapping.
+      - "3001:3001"
     environment:
-      VITE_NAME: "${VITE_NAME:-Your Name}"
-      VITE_EMAIL: "${VITE_EMAIL:-}"            # empty hides the email button
-      VITE_GITHUB_USER: "${VITE_GITHUB_USER:-your-github-username}"
-      VITE_LINKEDIN: "${VITE_LINKEDIN:-}"      # empty hides the LinkedIn button
-      VITE_UNIVERSITY: "${VITE_UNIVERSITY:-Your University}"
-      VITE_CV_URL: "${VITE_CV_URL:-}"          # e.g. /CV/your-cv.pdf; empty hides CV buttons
-      GITHUB_TOKEN: "${GITHUB_TOKEN:-}"        # read-only PAT; empty disables the contribution graph
+      VITE_NAME: "${VITE_NAME:-Mudabbir}"
+      VITE_EMAIL: "${VITE_EMAIL:-mudabbira.uk@gmail.com}"            # empty hides the email button
+      VITE_GITHUB_USER: "${VITE_GITHUB_USER:-mudabbir-ahmad}"
+      VITE_LINKEDIN: "${VITE_LINKEDIN:-https://www.linkedin.com/in/mudabbir-ahmad-4245a0281}"      # empty hides the LinkedIn button
+      VITE_UNIVERSITY: "${VITE_UNIVERSITY:-Kingston University}"
+      VITE_CV_URL: "${VITE_CV_URL:-/CV/my_cv.pdf}"          # e.g. /CV/your-cv.pdf; empty hides CV buttons
+      GITHUB_TOKEN: "${GITHUB_TOKEN:-}"        # read-only PAT, set in the gitignored root .env; empty disables the contribution graph
       ALLOWED_ORIGIN: "${ALLOWED_ORIGIN:-http://localhost:3001}"
       FORCE_HTTPS: "${FORCE_HTTPS:-false}"
     # Only if you set VITE_CV_URL: the CV is never baked into the image.
-    # volumes:
-    #   - ./public/CV:/app/dist/CV:ro
+    volumes:
+      - ./public/CV:/app/dist/CV:ro
     read_only: true
     tmpfs: [/tmp]
     cap_drop: [ALL]
